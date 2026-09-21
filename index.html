@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Отдай ИИ — внедрение ИИ в бизнес-процессы</title>
 <meta name="description" content="Внедряем ИИ в продажи, поддержку и отчётность: чат-боты, ИИ-ассистенты, автоматизация рутины. MVP за 2–3 недели.">
+<script src="js/iphone-16-max.js" defer></script>
 <link rel="icon" href="favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -356,6 +357,18 @@ dialog::backdrop{background:rgba(20,24,50,.35);backdrop-filter:blur(6px)}
   .hero{min-height:84vh}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+
+/* мокап iPhone 16 Pro Max (@sneas/telephone, MIT); mode="light" — тёмный статус-бар, виден на белых экранах */
+iphone-16-max{display:block}
+iphone-16-max:not([rendered]){visibility:hidden}
+iphone-16-max.phone{width:205px;margin-top:70px;height:auto;background:none;padding:0;border-radius:0;box-shadow:none;filter:drop-shadow(0 30px 40px rgba(30,40,110,.28))}
+iphone-16-max .scr{border-radius:0;height:100%}
+iphone-16-max .scr .top{padding-top:44px}
+iphone-16-max .food{padding-top:38px!important;height:170px}
+iphone-16-max.dphone{width:330px;height:auto;background:none;padding:0;border-radius:0;box-shadow:none;filter:drop-shadow(0 40px 60px rgba(30,40,110,.25))}
+iphone-16-max .dscr{border-radius:0}
+iphone-16-max .dtop{padding-top:58px}
+@media (max-width:600px){iphone-16-max.dphone{width:290px}iphone-16-max.phone{width:190px;margin-top:40px}}
 </style>
 </head>
 <body>
@@ -500,7 +513,7 @@ dialog::backdrop{background:rgba(20,24,50,.35);backdrop-filter:blur(6px)}
       <button class="case rv" data-cat="ai app bot" data-case="unimate">
         <span class="tag">ИИ-ассистент</span>
         <div class="stage">
-          <div class="phone"><div class="scr"><div class="isl"></div>
+          <iphone-16-max class="phone" mode="light"><div class="scr">
             <div class="top"><div class="av">U</div>UniMate · помощник</div>
             <div class="msgs">
               <div class="m bot">Привет! Завтра семинар по&nbsp;английскому. Повторим Present Perfect?</div>
@@ -509,7 +522,7 @@ dialog::backdrop{background:rgba(20,24,50,.35);backdrop-filter:blur(6px)}
               <div class="kb"><span>have</span><span>has</span><span>am</span></div>
               <div class="m bot">+20 XP 🔥 Серия: 6 дней</div>
             </div>
-          </div></div>
+          </div></iphone-16-max>
         </div>
         <div class="bar"><h3>ИИ-ассистент для студентов</h3><p>Telegram Mini App для вуза: подготовка к&nbsp;парам и&nbsp;зачётам</p>
           <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></div>
@@ -541,7 +554,7 @@ dialog::backdrop{background:rgba(20,24,50,.35);backdrop-filter:blur(6px)}
       <button class="case rv" data-cat="bot" data-case="finance">
         <span class="tag">Автоматизация</span>
         <div class="stage">
-          <div class="phone r"><div class="scr"><div class="isl"></div>
+          <iphone-16-max class="phone r" mode="light"><div class="scr">
             <div class="top"><div class="av" style="background:linear-gradient(135deg,#27b36b,#16a2c9)">₽</div>Финансы · бот</div>
             <div class="msgs">
               <div class="m bot">Сдаём цифры за&nbsp;сентябрь. Выручка без НДС?</div>
@@ -550,7 +563,7 @@ dialog::backdrop{background:rgba(20,24,50,.35);backdrop-filter:blur(6px)}
               <div class="m bot">Все цифры собраны. Сводка за&nbsp;сентябрь:
                 <div class="file" style="margin-top:6px"><i>XLSX</i><span><b>Расходы_сентябрь.xlsx</b><br>формулы сохранены</span></div></div>
             </div>
-          </div></div>
+          </div></iphone-16-max>
         </div>
         <div class="bar"><h3>Бот вместо Google-таблицы</h3><p>Сбор финансовых цифр с&nbsp;команды и&nbsp;сводка руководителю</p>
           <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></div>
@@ -560,7 +573,7 @@ dialog::backdrop{background:rgba(20,24,50,.35);backdrop-filter:blur(6px)}
       <button class="case rv" data-cat="app ai" data-case="planiro">
         <span class="tag">Компьютерное зрение</span>
         <div class="stage">
-          <div class="phone"><div class="scr"><div class="isl"></div>
+          <iphone-16-max class="phone" mode="light"><div class="scr">
             <div class="food" style="padding-top:20px">🥗<div class="scan"></div></div>
             <div style="padding:10px 12px 0;font-weight:700;font-size:12px">Салат с&nbsp;курицей · 320 г</div>
             <div style="padding:2px 12px;color:#777">Распознано по&nbsp;фото за&nbsp;2 сек</div>
@@ -571,7 +584,7 @@ dialog::backdrop{background:rgba(20,24,50,.35);backdrop-filter:blur(6px)}
               <div><span>Углеводы</span><u><i style="width:30%;background:#3ccf91"></i></u><b>18 г</b></div>
             </div>
             <div style="margin:6px 12px;background:#7b6cf6;color:#fff;border-radius:10px;text-align:center;padding:8px;font-weight:700">Добавить в&nbsp;дневник</div>
-          </div></div>
+          </div></iphone-16-max>
         </div>
         <div class="bar"><h3>Распознавание еды по&nbsp;фото</h3><p>Мобильное приложение: ИИ считает КБЖУ с&nbsp;одного снимка</p>
           <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></div>
@@ -581,7 +594,7 @@ dialog::backdrop{background:rgba(20,24,50,.35);backdrop-filter:blur(6px)}
       <button class="case rv" data-cat="bot" data-case="funnel">
         <span class="tag">Продажи</span>
         <div class="stage">
-          <div class="phone r"><div class="scr"><div class="isl"></div>
+          <iphone-16-max class="phone r" mode="light"><div class="scr">
             <div class="top"><div class="av" style="background:linear-gradient(135deg,#ff7a59,#ff4f9a)">S</div>Онлайн-курс · бот</div>
             <div class="msgs">
               <div class="m bot">6 уроков, доступ навсегда. Программа ниже 👇</div>
@@ -591,7 +604,7 @@ dialog::backdrop{background:rgba(20,24,50,.35);backdrop-filter:blur(6px)}
               <div class="m me">Оплатил</div>
               <div class="m bot">Оплата прошла ✓ Вот ваша ссылка в&nbsp;закрытый канал</div>
             </div>
-          </div></div>
+          </div></iphone-16-max>
         </div>
         <div class="bar"><h3>Воронка продаж в&nbsp;Telegram</h3><p>Бот сам прогревает, принимает оплату и&nbsp;выдаёт доступ</p>
           <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></div>
