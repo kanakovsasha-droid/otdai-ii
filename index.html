@@ -42,7 +42,7 @@ header::before{content:"";position:absolute;inset:0 0 -28px 0;z-index:-1;pointer
 header .btn{height:62px;padding:0 40px;font-size:16px}
 .logo{display:flex;align-items:center;gap:12px;font-weight:600;letter-spacing:-.01em;font-size:23px;white-space:nowrap}
 .logo svg{width:46px;height:46px;flex:none}
-.menu{display:flex;gap:34px;margin-left:auto;font-size:17.5px}
+.menu{display:flex;align-items:center;gap:34px;margin-left:auto;font-size:17.5px;white-space:nowrap}
 .menu+.head-right{margin-left:0}
 .menu a{color:#1b1d27;transition:color .2s}
 .menu a:hover{color:var(--blue)}
@@ -83,6 +83,27 @@ header .btn{height:62px;padding:0 40px;font-size:16px}
 .h2{font-size:clamp(34px,4.6vw,64px);font-weight:500;letter-spacing:-.015em;line-height:1.08}
 .lead{font-size:clamp(18px,2vw,28px);color:var(--muted);line-height:1.3;margin-top:22px}
 .center{text-align:center}
+
+.badge{display:inline-block;margin-bottom:28px;padding:10px 20px;border-radius:999px;font-size:15px;font-weight:600;letter-spacing:.02em;background:rgba(255,255,255,.75);box-shadow:inset 0 0 0 1px rgba(120,130,200,.25)}
+.calc-link{margin-top:22px;font-size:16px;color:var(--muted);border-bottom:1px dashed rgba(107,111,128,.5)}
+.calc-link:hover{color:var(--ink)}
+.gain-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:70px}
+.gain h3{font-size:30px;font-weight:500;margin:28px 0 14px}
+.gain p{font-size:17px;line-height:1.55;color:#2a2c38}
+.calc{margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:50px;padding:48px}
+.calc h3{font-size:32px;font-weight:500;margin-bottom:30px}
+.calc label{display:block;font-size:17px;margin-bottom:28px;color:#2a2c38}
+.calc label b{float:right;font-size:20px;font-weight:600;color:var(--ink)}
+.calc input[type=range]{display:block;width:100%;margin-top:14px;accent-color:#0b0b12;height:24px;cursor:pointer}
+.calc-out{display:grid;grid-template-columns:1fr 1fr;gap:26px 24px;align-content:start}
+.res span{display:block;font-size:15px;color:var(--muted);margin-bottom:6px}
+.res b{font-size:30px;font-weight:600;letter-spacing:-.01em}
+.res.big{grid-column:1/-1}.res.big b{font-size:clamp(40px,5vw,64px);font-weight:500}
+.note{grid-column:1/-1;font-size:14px;line-height:1.5;color:var(--muted)}
+.calc-out .btn{grid-column:1/-1;justify-self:start}
+
+.gain,.calc{border-radius:var(--r);background:linear-gradient(160deg,rgba(221,233,250,.9),rgba(235,242,252,.86));backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 2px 6px rgba(40,70,150,.05)}
+.gain{padding:30px}
 
 /* кто мы */
 .about p.big{font-size:clamp(22px,2.6vw,36px);line-height:1.25;color:#55586a;text-align:center;max-width:1100px;margin:0 auto}
@@ -244,6 +265,8 @@ dialog::backdrop{background:rgba(20,24,50,.35);backdrop-filter:blur(6px)}
 
 /* мобилка */
 @media (max-width:1100px){
+  .gain-grid{grid-template-columns:1fr 1fr}
+  .calc{grid-template-columns:1fr;padding:36px}
   .sol-grid{grid-template-columns:1fr 1fr}
   .menu,.head-right .btn{display:none}
   .menu+.head-right{margin-left:auto}
@@ -277,6 +300,10 @@ dialog::backdrop{background:rgba(20,24,50,.35);backdrop-filter:blur(6px)}
   .stats{grid-template-columns:1fr;gap:50px;margin-top:60px}
   .stat span{margin-top:12px}
   .steps{grid-template-columns:1fr}
+  .gain-grid{grid-template-columns:1fr}
+  .calc{padding:26px 20px}
+  .calc-out{grid-template-columns:1fr}
+  .calc-out .btn{justify-self:stretch;white-space:normal;text-align:center;height:auto;padding:16px 20px}
   .ft-cols{grid-template-columns:1fr 1fr}
   .ft-tg{font-size:24px}
   .sol-grid{grid-template-columns:1fr}
@@ -316,11 +343,11 @@ dialog::backdrop{background:rgba(20,24,50,.35);backdrop-filter:blur(6px)}
           <div><b>ИИ-контент</b><a href="#cases">Рекламные ролики</a><a href="#services">Презентации и&nbsp;визуал</a></div>
         </div></div>
       </div>
+      <a href="#razbor">Разбор</a>
       <a href="#cases">Кейсы</a>
       <a href="#solutions">Решения</a>
       <a href="#process">Как работаем</a>
       <a href="#faq">Вопросы</a>
-      <a href="#contact">Контакты</a>
     </nav>
     <div class="head-right">
       <a class="btn" href="#contact">Связаться</a>
@@ -332,10 +359,40 @@ dialog::backdrop{background:rgba(20,24,50,.35);backdrop-filter:blur(6px)}
 <main id="top">
   <section class="hero wrap">
     <div class="glass-orb"></div>
-    <h1 class="rv">Внедряем ИИ в&nbsp;бизнес-процессы</h1>
-    <p class="rv">Чат-боты, ИИ-ассистенты и&nbsp;автоматизация рутины: заявки, отчёты и&nbsp;ответы клиентам делает ИИ, а&nbsp;ваша команда занимается тем, что приносит деньги.</p>
-    <a class="btn-ghost rv" href="#contact">Получить консультацию
+    <span class="badge rv">Бесплатный разбор бизнеса · 30&nbsp;минут</span>
+    <h1 class="rv">За&nbsp;30 минут найдём, где ИИ сэкономит вам деньги</h1>
+    <p class="rv">Расскажите про свой бизнес. Покажем, какие процессы отдать ИИ и&nbsp;сколько это сэкономит денег, времени и&nbsp;часов сотрудников.</p>
+    <a class="btn-ghost rv" href="https://t.me/ke11y7" target="_blank" rel="noopener">Записаться на&nbsp;разбор
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></a>
+    <a class="calc-link rv" href="#razbor">или посчитайте экономию сами ↓</a>
+  </section>
+
+  <section class="sec wrap" id="razbor">
+    <h2 class="h2 center rv">Что покажем за&nbsp;30 минут</h2>
+    <p class="lead center rv">Разбираем ваш бизнес и&nbsp;находим, где ИИ даст результат.</p>
+    <div class="gain-grid">
+      <div class="gain rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 12h.01M18 12h.01"/></svg></div><h3>Деньги</h3><p>Сколько вы тратите на&nbsp;ручную работу и&nbsp;сколько сэкономите в&nbsp;месяц после внедрения.</p></div>
+      <div class="gain rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></svg></div><h3>Сотрудники</h3><p>Кто в&nbsp;команде тонет в&nbsp;рутине и&nbsp;сколько часов ИИ вернёт каждому на&nbsp;важную работу.</p></div>
+      <div class="gain rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><path d="M10 6.5h4a3 3 0 0 1 3 3V14"/></svg></div><h3>Процессы</h3><p>Какие процессы отдать ИИ первыми, чтобы быстро увидеть результат, а&nbsp;какие пока не&nbsp;трогать.</p></div>
+      <div class="gain rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>Время</h3><p>Как ответы клиентам, отчёты и&nbsp;заявки начнут делаться за&nbsp;секунды, а&nbsp;не&nbsp;за&nbsp;часы.</p></div>
+    </div>
+
+    <div class="calc rv">
+      <div class="calc-in">
+        <h3>Посчитайте экономию</h3>
+        <label>Сотрудников на&nbsp;рутине <b id="vN">5</b><input type="range" id="cN" min="1" max="50" value="5"></label>
+        <label>Часов рутины в&nbsp;день у&nbsp;каждого <b id="vH">3</b><input type="range" id="cH" min="1" max="8" value="3"></label>
+        <label>Средняя зарплата, ₽ в&nbsp;месяц <b id="vS">80 000</b><input type="range" id="cS" min="30000" max="250000" step="5000" value="80000"></label>
+      </div>
+      <div class="calc-out">
+        <div class="res big"><span>Экономия в&nbsp;месяц</span><b id="rM">0 ₽</b></div>
+        <div class="res"><span>Экономия в&nbsp;год</span><b id="rY">0 ₽</b></div>
+        <div class="res"><span>Часов в&nbsp;месяц вернётся команде</span><b id="rH">0</b></div>
+        <div class="res"><span>Это как сотрудников на&nbsp;полный день</span><b id="rF">0</b></div>
+        <p class="note">Примерный расчёт: считаем, что ИИ забирает половину рутины. Точную цифру назовём на&nbsp;разборе.</p>
+        <a class="btn" href="https://t.me/ke11y7" target="_blank" rel="noopener">Разобрать мой бизнес бесплатно</a>
+      </div>
+    </div>
   </section>
 
   <section class="sec about wrap" id="about">
@@ -530,7 +587,7 @@ dialog::backdrop{background:rgba(20,24,50,.35);backdrop-filter:blur(6px)}
     <h2 class="h2 center rv">Как работаем</h2>
     <p class="lead center rv">Без полугодовых внедрений. Первый результат через пару недель.</p>
     <div class="steps">
-      <div class="step rv"><span class="num">01</span><h3>Разбор процесса</h3><p>Созваниваемся, смотрим, где у&nbsp;вас уходят часы, и&nbsp;считаем, что даст автоматизация.</p><span class="when">Бесплатно · 1 день</span></div>
+      <div class="step rv"><span class="num">01</span><h3>Бесплатный разбор</h3><p>Созваниваемся на&nbsp;30 минут, смотрим, где у&nbsp;вас уходят деньги и&nbsp;часы, и&nbsp;считаем, что даст ИИ.</p><span class="when">Бесплатно · 30 минут</span></div>
       <div class="step rv"><span class="num">02</span><h3>Прототип</h3><p>Собираем рабочий вариант на&nbsp;ваших данных, чтобы вы потрогали его до&nbsp;большой разработки.</p><span class="when">3–5 дней</span></div>
       <div class="step rv"><span class="num">03</span><h3>Внедрение</h3><p>Подключаем к&nbsp;вашим CRM, таблицам и&nbsp;мессенджерам, обучаем команду.</p><span class="when">1–3 недели</span></div>
       <div class="step rv"><span class="num">04</span><h3>Поддержка</h3><p>Следим за&nbsp;качеством ответов, дообучаем и&nbsp;добавляем новые сценарии.</p><span class="when">По подписке</span></div>
@@ -540,6 +597,7 @@ dialog::backdrop{background:rgba(20,24,50,.35);backdrop-filter:blur(6px)}
   <section class="sec wrap" id="faq">
     <h2 class="h2 center rv">Частые вопросы</h2>
     <div class="faq">
+      <details class="q rv"><summary>Что будет на&nbsp;бесплатном разборе?<i></i></summary><p>Созвон на&nbsp;30 минут. Вы рассказываете, как устроен бизнес, мы находим процессы, которые можно отдать ИИ, и&nbsp;показываем, сколько это сэкономит денег, времени и&nbsp;часов сотрудников. Ни&nbsp;к&nbsp;чему не&nbsp;обязывает.</p></details>
       <details class="q rv"><summary>Сколько стоит внедрение?<i></i></summary><p>Зависит от&nbsp;задачи. Простой бот для заявок и&nbsp;сложная платформа с&nbsp;ИИ-агентом стоят очень по-разному. После первого созвона даём фиксированную цену и&nbsp;срок, без сюрпризов в&nbsp;процессе.</p></details>
       <details class="q rv"><summary>Что будет с&nbsp;данными моих клиентов?<i></i></summary><p>Храним данные на&nbsp;вашем сервере или в&nbsp;России, если это требуется по&nbsp;152-ФЗ. Можем подписать NDA. Ключи и&nbsp;доступы остаются у&nbsp;вас.</p></details>
       <details class="q rv"><summary>ИИ не наговорит клиентам ерунды?<i></i></summary><p>Ассистент отвечает только по&nbsp;вашей базе знаний и&nbsp;правилам. Если вопрос за&nbsp;пределами, он честно говорит, что уточнит, и&nbsp;передаёт диалог человеку.</p></details>
@@ -551,10 +609,10 @@ dialog::backdrop{background:rgba(20,24,50,.35);backdrop-filter:blur(6px)}
   <section class="sec wrap" id="contact">
     <div class="final rv">
       <div>
-        <h2>Какую рутину отдадим ИИ?</h2>
-        <p>Напишите пару строк о&nbsp;задаче в&nbsp;Telegram. Ответим в&nbsp;течение дня и&nbsp;предложим, как её автоматизировать.</p>
+        <h2>Запишитесь на&nbsp;бесплатный разбор</h2>
+        <p>Напишите в&nbsp;Telegram пару строк про бизнес. За&nbsp;30 минут созвона найдём, куда внедрить ИИ, и&nbsp;посчитаем экономию.</p>
         <div class="btns">
-          <a class="btn" href="https://t.me/ke11y7" target="_blank" rel="noopener">Написать в&nbsp;Telegram</a>
+          <a class="btn" href="https://t.me/ke11y7" target="_blank" rel="noopener">Записаться на&nbsp;разбор</a>
         </div>
       </div>
       <div class="ring">
@@ -591,6 +649,16 @@ dialog::backdrop{background:rgba(20,24,50,.35);backdrop-filter:blur(6px)}
 <dialog id="dlg"><div class="dlg"><button class="x" id="dlgx" aria-label="Закрыть">×</button><div id="dlgbody"></div></div></dialog>
 
 <script>
+// калькулятор экономии: ИИ забирает половину рутины, 21 рабочий день, 168 часов в месяц
+(function(){
+  const $=id=>document.getElementById(id), f=n=>Math.round(n).toLocaleString("ru-RU");
+  function calc(){ const n=+$("cN").value, h=+$("cH").value, sal=+$("cS").value;
+    $("vN").textContent=n; $("vH").textContent=h; $("vS").textContent=f(sal);
+    const saved=n*h*21*0.5, money=saved*sal/168;
+    $("rM").textContent=f(money)+" ₽"; $("rY").textContent=f(money*12)+" ₽";
+    $("rH").textContent=f(saved); $("rF").textContent=(saved/168).toLocaleString("ru-RU",{maximumFractionDigits:1}); }
+  ["cN","cH","cS"].forEach(id=>$(id).addEventListener("input",calc)); calc();
+})();
 const CASES={
   unimate:{k:"ИИ-ассистент · Telegram Mini App",t:"ИИ-ассистент для студентов вуза",
     task:"Студентам нужно готовиться к парам и зачётам, а преподавателям — видеть, кто реально занимается. Заказчик хотел продукт внутри Telegram, без установки приложений.",
