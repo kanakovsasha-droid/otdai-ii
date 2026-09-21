@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Отдай ИИ — внедрение ИИ в бизнес-процессы</title>
 <meta name="description" content="Внедряем ИИ в продажи, поддержку и отчётность: чат-боты, ИИ-ассистенты, автоматизация рутины. MVP за 2–3 недели.">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -41,7 +42,7 @@ header::before{content:"";position:absolute;inset:0 0 -28px 0;z-index:-1;pointer
 .nav{display:flex;align-items:center;gap:40px;height:96px}
 header .btn{height:62px;padding:0 40px;font-size:16px}
 .logo{display:flex;align-items:center;gap:12px;font-weight:600;letter-spacing:-.01em;font-size:23px;white-space:nowrap}
-.logo svg{width:48px;height:48px;flex:none}
+.logo img{width:48px;height:48px;flex:none;object-fit:contain;filter:drop-shadow(0 4px 8px rgba(0,0,0,.15))}
 .menu{display:flex;align-items:center;gap:34px;margin-left:auto;font-size:17.5px;white-space:nowrap}
 .menu+.head-right{margin-left:0}
 .menu a{color:#1b1d27;transition:color .2s}
@@ -61,12 +62,18 @@ header .btn{height:62px;padding:0 40px;font-size:16px}
 .dd:hover .dd-t,.dd:focus-within .dd-t{color:var(--blue)}
 .dd:hover .dd-t::after,.dd:focus-within .dd-t::after{content:"";position:absolute;left:0;right:0;bottom:26px;height:2px;border-radius:2px;background:linear-gradient(100deg,#5fd0f5,#8f9dff 40%,#5cc0f2 65%,#b58cff)}
 .mega{position:absolute;left:0;right:0;top:96px;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .25s,transform .25s,visibility .25s;
-  background:rgba(255,255,255,.55);backdrop-filter:blur(26px) saturate(1.7);-webkit-backdrop-filter:blur(26px) saturate(1.7);box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 30px 60px rgba(60,70,160,.12);border-bottom:1px solid rgba(255,255,255,.7)}
+  background:rgba(255,255,255,.93);backdrop-filter:blur(26px) saturate(1.7);-webkit-backdrop-filter:blur(26px) saturate(1.7);box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 30px 60px rgba(60,70,160,.12);border-bottom:1px solid rgba(255,255,255,.7)}
 .dd:hover .mega,.dd:focus-within .mega{opacity:1;visibility:visible;transform:none}
 .mega-in{display:grid;grid-template-columns:repeat(4,max-content);gap:70px;padding-top:30px;padding-bottom:40px;justify-content:center}
 .mega b{display:block;color:var(--blue);font-weight:500;font-size:15px;margin-bottom:14px}
 .mega a{display:block;font-size:14px;color:#1b1d27;padding:5px 0}
 .mega a:hover{color:var(--blue)}
+.dd.sm{position:relative}
+.dd.sm .mega{left:-28px;right:auto;top:100%;width:max-content;border-radius:0 0 22px 22px;border:1px solid rgba(255,255,255,.7);border-top:0}
+.dd.sm .mega-in{display:block;padding:22px 28px 26px}
+.dd.sm .mega a{font-size:15px;padding:7px 0}
+.sol[id]{scroll-margin-top:130px}
+.sol:target{box-shadow:inset 0 0 0 2px var(--ink),0 18px 40px rgba(50,100,200,.14)}
 
 /* кнопка с радужным контуром */
 .btn-ghost{position:relative;display:inline-flex;align-items:center;gap:14px;height:82px;padding:0 34px;border-radius:999px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:16px;color:var(--ink);}
@@ -319,7 +326,7 @@ dialog::backdrop{background:rgba(20,24,50,.35);backdrop-filter:blur(6px)}
   .nav{height:68px;gap:12px}
   .menu.open{top:68px}
   .logo{font-size:20px}
-  .logo svg{width:40px;height:40px}
+  .logo img{width:40px;height:40px}
   .tg{width:48px;height:48px}
   .sec{padding-top:80px;padding-bottom:80px}
   .stats{grid-template-columns:1fr;gap:50px;margin-top:60px}
@@ -358,7 +365,7 @@ dialog::backdrop{background:rgba(20,24,50,.35);backdrop-filter:blur(6px)}
 <header>
   <div class="wrap nav">
     <a class="logo" href="#top" aria-label="Отдай ИИ — на главную">
-      <svg viewBox="15 15 70 70" aria-hidden="true"><rect x="18" y="24" width="64" height="58" rx="13" fill="#0b0b12"/><rect x="18" y="18" width="64" height="56" rx="13" fill="#2a2b31"/><rect x="21" y="20" width="58" height="50" rx="11" fill="#1b1c21"/><text x="28" y="35" font-family="Wix Madefor Display" font-weight="600" font-size="9.5" fill="#9b9ca6">отдай</text><text x="71" y="62" text-anchor="end" font-family="Wix Madefor Display" font-weight="800" font-size="23" fill="#fff" letter-spacing="-.5">ИИ</text></svg>
+      <img src="img/logo-key.png" alt="" width="48" height="48">
       Отдай ИИ
     </a>
     <nav class="menu" id="menu">
@@ -370,8 +377,18 @@ dialog::backdrop{background:rgba(20,24,50,.35);backdrop-filter:blur(6px)}
           <div><b>ИИ-контент</b><a href="#cases">Рекламные ролики</a><a href="#services">Презентации и&nbsp;визуал</a></div>
         </div></div>
       </div>
-      <a href="biznes.html">ИИ для бизнеса</a>
-      <a href="chatboty.html">ИИ-чат-боты</a>
+      <div class="dd"><a href="biznes.html" class="dd-t">ИИ для бизнеса</a>
+        <div class="mega"><div class="wrap mega-in">
+          <div><b>Разработка</b><a href="biznes.html#agents">ИИ-агенты</a><a href="biznes.html#assistants">ИИ-ассистенты</a><a href="biznes.html#search">Умный поиск</a><a href="biznes.html#ocr">Распознавание документов</a><a href="biznes.html#speech">Речевая аналитика</a><a href="biznes.html#analytics">ИИ-аналитика</a></div>
+          <div><b>Отрасли</b><a href="biznes.html#service">Клиентский сервис</a><a href="biznes.html#ecom">Онлайн-продажи</a><a href="biznes.html#edu">Образование</a><a href="biznes.html#med">Медицина</a><a href="biznes.html#fin">Финансы</a><a href="biznes.html#realty">Недвижимость и&nbsp;УК</a><a href="biznes.html#horeca">Рестораны и&nbsp;HoReCa</a></div>
+          <div><b>Консалтинг</b><a href="biznes.html#strat">Стратсессия по&nbsp;ИИ</a><a href="biznes.html#training">Обучение команды</a></div>
+        </div></div>
+      </div>
+      <div class="dd sm"><a href="chatboty.html" class="dd-t">ИИ-чат-боты</a>
+        <div class="mega"><div class="mega-in">
+          <div><a href="chatboty.html#b-clinic">Для клиник</a><a href="chatboty.html#b-beauty">Для салонов красоты</a><a href="chatboty.html#b-school">Для онлайн-школ</a><a href="chatboty.html#b-food">Для ресторанов</a><a href="chatboty.html#b-realty">Для недвижимости и&nbsp;УК</a><a href="chatboty.html#b-law">Для юристов</a><a href="chatboty.html#b-hr">Для управления кадрами</a></div>
+        </div></div>
+      </div>
       <a href="#cases">Кейсы</a>
       <a href="#razbor">Разбор</a>
       <a href="#faq">Вопросы</a>
@@ -652,7 +669,7 @@ dialog::backdrop{background:rgba(20,24,50,.35);backdrop-filter:blur(6px)}
   <div class="wrap">
     <div class="ft-top">
       <div class="ft-brand">
-        <a class="logo" href="#top"><svg viewBox="15 15 70 70" aria-hidden="true"><rect x="18" y="24" width="64" height="58" rx="13" fill="#0b0b12"/><rect x="18" y="18" width="64" height="56" rx="13" fill="#2a2b31"/><rect x="21" y="20" width="58" height="50" rx="11" fill="#1b1c21"/><text x="28" y="35" font-family="Wix Madefor Display" font-weight="600" font-size="9.5" fill="#9b9ca6">отдай</text><text x="71" y="62" text-anchor="end" font-family="Wix Madefor Display" font-weight="800" font-size="23" fill="#fff" letter-spacing="-.5">ИИ</text></svg>Отдай ИИ</a>
+        <a class="logo" href="#top"><img src="img/logo-key.png" alt="" width="48" height="48">Отдай ИИ</a>
         <p>Внедряем ИИ в&nbsp;бизнес-процессы: боты, ассистенты, автоматизация рутины.</p>
       </div>
       <div class="ft-contact">

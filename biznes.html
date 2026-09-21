@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ИИ для бизнеса — внедрение ИИ под ключ | Отдай ИИ</title>
 <meta name="description" content="Внедряем ИИ в продажи, поддержку, отчётность, документы и найм. Бесплатный разбор бизнеса за 30 минут.">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -41,7 +42,7 @@ header::before{content:"";position:absolute;inset:0 0 -28px 0;z-index:-1;pointer
 .nav{display:flex;align-items:center;gap:40px;height:96px}
 header .btn{height:62px;padding:0 40px;font-size:16px}
 .logo{display:flex;align-items:center;gap:12px;font-weight:600;letter-spacing:-.01em;font-size:23px;white-space:nowrap}
-.logo svg{width:48px;height:48px;flex:none}
+.logo img{width:48px;height:48px;flex:none;object-fit:contain;filter:drop-shadow(0 4px 8px rgba(0,0,0,.15))}
 .menu{display:flex;align-items:center;gap:34px;margin-left:auto;font-size:17.5px;white-space:nowrap}
 .menu+.head-right{margin-left:0}
 .menu a{color:#1b1d27;transition:color .2s}
@@ -61,12 +62,18 @@ header .btn{height:62px;padding:0 40px;font-size:16px}
 .dd:hover .dd-t,.dd:focus-within .dd-t{color:var(--blue)}
 .dd:hover .dd-t::after,.dd:focus-within .dd-t::after{content:"";position:absolute;left:0;right:0;bottom:26px;height:2px;border-radius:2px;background:linear-gradient(100deg,#5fd0f5,#8f9dff 40%,#5cc0f2 65%,#b58cff)}
 .mega{position:absolute;left:0;right:0;top:96px;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .25s,transform .25s,visibility .25s;
-  background:rgba(255,255,255,.55);backdrop-filter:blur(26px) saturate(1.7);-webkit-backdrop-filter:blur(26px) saturate(1.7);box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 30px 60px rgba(60,70,160,.12);border-bottom:1px solid rgba(255,255,255,.7)}
+  background:rgba(255,255,255,.93);backdrop-filter:blur(26px) saturate(1.7);-webkit-backdrop-filter:blur(26px) saturate(1.7);box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 30px 60px rgba(60,70,160,.12);border-bottom:1px solid rgba(255,255,255,.7)}
 .dd:hover .mega,.dd:focus-within .mega{opacity:1;visibility:visible;transform:none}
 .mega-in{display:grid;grid-template-columns:repeat(4,max-content);gap:70px;padding-top:30px;padding-bottom:40px;justify-content:center}
 .mega b{display:block;color:var(--blue);font-weight:500;font-size:15px;margin-bottom:14px}
 .mega a{display:block;font-size:14px;color:#1b1d27;padding:5px 0}
 .mega a:hover{color:var(--blue)}
+.dd.sm{position:relative}
+.dd.sm .mega{left:-28px;right:auto;top:100%;width:max-content;border-radius:0 0 22px 22px;border:1px solid rgba(255,255,255,.7);border-top:0}
+.dd.sm .mega-in{display:block;padding:22px 28px 26px}
+.dd.sm .mega a{font-size:15px;padding:7px 0}
+.sol[id]{scroll-margin-top:130px}
+.sol:target{box-shadow:inset 0 0 0 2px var(--ink),0 18px 40px rgba(50,100,200,.14)}
 
 /* кнопка с радужным контуром */
 .btn-ghost{position:relative;display:inline-flex;align-items:center;gap:14px;height:82px;padding:0 34px;border-radius:999px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:16px;color:var(--ink);}
@@ -319,7 +326,7 @@ dialog::backdrop{background:rgba(20,24,50,.35);backdrop-filter:blur(6px)}
   .nav{height:68px;gap:12px}
   .menu.open{top:68px}
   .logo{font-size:20px}
-  .logo svg{width:40px;height:40px}
+  .logo img{width:40px;height:40px}
   .tg{width:48px;height:48px}
   .sec{padding-top:80px;padding-bottom:80px}
   .stats{grid-template-columns:1fr;gap:50px;margin-top:60px}
@@ -358,7 +365,7 @@ dialog::backdrop{background:rgba(20,24,50,.35);backdrop-filter:blur(6px)}
 <header>
   <div class="wrap nav">
     <a class="logo" href="./" aria-label="Отдай ИИ — на главную">
-      <svg viewBox="15 15 70 70" aria-hidden="true"><rect x="18" y="24" width="64" height="58" rx="13" fill="#0b0b12"/><rect x="18" y="18" width="64" height="56" rx="13" fill="#2a2b31"/><rect x="21" y="20" width="58" height="50" rx="11" fill="#1b1c21"/><text x="28" y="35" font-family="Wix Madefor Display" font-weight="600" font-size="9.5" fill="#9b9ca6">отдай</text><text x="71" y="62" text-anchor="end" font-family="Wix Madefor Display" font-weight="800" font-size="23" fill="#fff" letter-spacing="-.5">ИИ</text></svg>
+      <img src="img/logo-key.png" alt="" width="48" height="48">
       Отдай ИИ
     </a>
     <nav class="menu" id="menu">
@@ -370,8 +377,18 @@ dialog::backdrop{background:rgba(20,24,50,.35);backdrop-filter:blur(6px)}
           <div><b>ИИ-контент</b><a href="./#cases">Рекламные ролики</a><a href="./#services">Презентации и&nbsp;визуал</a></div>
         </div></div>
       </div>
-      <a href="biznes.html">ИИ для бизнеса</a>
-      <a href="chatboty.html">ИИ-чат-боты</a>
+      <div class="dd"><a href="biznes.html" class="dd-t">ИИ для бизнеса</a>
+        <div class="mega"><div class="wrap mega-in">
+          <div><b>Разработка</b><a href="biznes.html#agents">ИИ-агенты</a><a href="biznes.html#assistants">ИИ-ассистенты</a><a href="biznes.html#search">Умный поиск</a><a href="biznes.html#ocr">Распознавание документов</a><a href="biznes.html#speech">Речевая аналитика</a><a href="biznes.html#analytics">ИИ-аналитика</a></div>
+          <div><b>Отрасли</b><a href="biznes.html#service">Клиентский сервис</a><a href="biznes.html#ecom">Онлайн-продажи</a><a href="biznes.html#edu">Образование</a><a href="biznes.html#med">Медицина</a><a href="biznes.html#fin">Финансы</a><a href="biznes.html#realty">Недвижимость и&nbsp;УК</a><a href="biznes.html#horeca">Рестораны и&nbsp;HoReCa</a></div>
+          <div><b>Консалтинг</b><a href="biznes.html#strat">Стратсессия по&nbsp;ИИ</a><a href="biznes.html#training">Обучение команды</a></div>
+        </div></div>
+      </div>
+      <div class="dd sm"><a href="chatboty.html" class="dd-t">ИИ-чат-боты</a>
+        <div class="mega"><div class="mega-in">
+          <div><a href="chatboty.html#b-clinic">Для клиник</a><a href="chatboty.html#b-beauty">Для салонов красоты</a><a href="chatboty.html#b-school">Для онлайн-школ</a><a href="chatboty.html#b-food">Для ресторанов</a><a href="chatboty.html#b-realty">Для недвижимости и&nbsp;УК</a><a href="chatboty.html#b-law">Для юристов</a><a href="chatboty.html#b-hr">Для управления кадрами</a></div>
+        </div></div>
+      </div>
       <a href="./#cases">Кейсы</a>
       <a href="./#razbor">Разбор</a>
       <a href="./#faq">Вопросы</a>
@@ -402,6 +419,42 @@ dialog::backdrop{background:rgba(20,24,50,.35);backdrop-filter:blur(6px)}
       <div class="sol rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></div><h3>Документы</h3><p>Счета, накладные и&nbsp;акты со&nbsp;сканов и&nbsp;фото попадают в&nbsp;1С и&nbsp;таблицы, спорные места подсвечиваются.</p><span class="gain">Бухгалтерия не&nbsp;перебивает бумаги</span></div>
       <div class="sol rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></svg></div><h3>HR и&nbsp;найм</h3><p>Разбирает отклики, проводит первое интервью в&nbsp;чате и&nbsp;отвечает новичкам по&nbsp;базе знаний компании.</p><span class="gain">Меньше часов на&nbsp;отбор и&nbsp;адаптацию</span></div>
       <div class="sol rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-5-5"/></svg></div><h3>Руководитель</h3><p>ИИ-ассистент по&nbsp;данным компании: спросили словами и&nbsp;получили цифры, без запроса в&nbsp;отдел и&nbsp;ожидания.</p><span class="gain">Ответ за&nbsp;секунды</span></div>
+    </div>
+  </section>
+
+  <section class="sec wrap" id="dev">
+    <h2 class="h2 center rv">Что разрабатываем</h2>
+    <p class="lead center rv">Решения на&nbsp;базе больших языковых моделей под ваши задачи.</p>
+    <div class="sol-grid">
+      <div class="sol rv" id="agents"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="4"/><path d="M12 8V4M9 14h.01M15 14h.01"/></svg></div><h3>ИИ-агенты</h3><p>Сами выполняют цепочку действий: принимают заявку, проверяют данные, заносят в&nbsp;CRM и&nbsp;пишут клиенту.</p></div>
+      <div class="sol rv" id="assistants"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></div><h3>ИИ-ассистенты</h3><p>Помощник для сотрудников или клиентов, который отвечает по&nbsp;вашим документам и&nbsp;регламентам.</p></div>
+      <div class="sol rv" id="search"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-5-5"/></svg></div><h3>Умный поиск</h3><p>Сотрудник спрашивает своими словами и&nbsp;за&nbsp;секунды получает ответ со&nbsp;ссылкой на&nbsp;нужный документ.</p></div>
+      <div class="sol rv" id="ocr"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 12h10"/></svg></div><h3>Распознавание документов</h3><p>Сканы, фото чеков, накладных и&nbsp;анкет превращаются в&nbsp;данные в&nbsp;1С и&nbsp;таблицах.</p></div>
+      <div class="sol rv" id="speech"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div><h3>Речевая аналитика</h3><p>Расшифровка звонков, проверка скриптов продаж и&nbsp;поиск разговоров, где потеряли клиента.</p></div>
+      <div class="sol rv" id="analytics"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div><h3>ИИ-аналитика</h3><p>Находит закономерности в&nbsp;продажах и&nbsp;расходах, готовит сводки и&nbsp;прогнозы для руководителя.</p></div>
+    </div>
+  </section>
+
+  <section class="sec wrap" id="otrasli">
+    <h2 class="h2 center rv">Отрасли</h2>
+    <p class="lead center rv">Знаем специфику и&nbsp;типовые задачи.</p>
+    <div class="sol-grid">
+      <div class="sol rv" id="service"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></div><h3>Клиентский сервис</h3><p>Боты и&nbsp;ассистенты закрывают до&nbsp;большинства типовых вопросов и&nbsp;разгружают операторов.</p></div>
+      <div class="sol rv" id="ecom"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.5 12h11.5l2-8H6.2"/></svg></div><h3>Онлайн-продажи</h3><p>Консультации по&nbsp;товарам, статусы заказов, возвраты и&nbsp;допродажи прямо в&nbsp;чате.</p></div>
+      <div class="sol rv" id="edu"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2.5 9 2.5 12 0v-5"/></svg></div><h3>Образование</h3><p>ИИ-репетиторы, проверка заданий и&nbsp;подготовка к&nbsp;экзаменам. Уже запускали для вуза.</p></div>
+      <div class="sol rv" id="med"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-8-4.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6.5-8 11-8 11z"/></svg></div><h3>Медицина</h3><p>Запись к&nbsp;врачу, подготовка к&nbsp;анализам, напоминания и&nbsp;ответы пациентам 24/7.</p></div>
+      <div class="sol rv" id="fin"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg></div><h3>Финансы</h3><p>Сбор отчётности с&nbsp;команды, сверки, обработка первичных документов.</p></div>
+      <div class="sol rv" id="realty"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg></div><h3>Недвижимость и&nbsp;УК</h3><p>Заявки жителей, платежи, ответы по&nbsp;дому. Делали платформу для жилых комплексов.</p></div>
+      <div class="sol rv" id="horeca"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v8a2 2 0 0 0 2 2v8M9 3v8M7 3v6M17 21V3c-2 1-3 4-3 8h3"/></svg></div><h3>Рестораны и&nbsp;HoReCa</h3><p>Брони, ответы гостям, сбор отзывов и&nbsp;сводка управляющему по&nbsp;итогам смены.</p></div>
+    </div>
+  </section>
+
+  <section class="sec wrap" id="consult">
+    <h2 class="h2 center rv">Консалтинг</h2>
+    <p class="lead center rv">Если пока непонятно, с&nbsp;чего начать.</p>
+    <div class="sol-grid">
+      <div class="sol rv" id="strat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20l4-4 4 4M7 9h6M7 12h10"/></svg></div><h3>Стратсессия по&nbsp;ИИ</h3><p>Разбираем процессы компании с&nbsp;руководителями и&nbsp;составляем план внедрения ИИ по&nbsp;шагам с&nbsp;оценкой выгоды.</p><span class="gain">План на&nbsp;3–6 месяцев</span></div>
+      <div class="sol rv" id="training"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2.5 9 2.5 12 0v-5"/></svg></div><h3>Обучение команды</h3><p>Учим сотрудников работать с&nbsp;ChatGPT и&nbsp;другими нейросетями на&nbsp;их реальных задачах, а&nbsp;не&nbsp;на&nbsp;абстрактных примерах.</p><span class="gain">Практика на&nbsp;ваших задачах</span></div>
     </div>
   </section>
 
@@ -456,7 +509,7 @@ dialog::backdrop{background:rgba(20,24,50,.35);backdrop-filter:blur(6px)}
   <div class="wrap">
     <div class="ft-top">
       <div class="ft-brand">
-        <a class="logo" href="./"><svg viewBox="15 15 70 70" aria-hidden="true"><rect x="18" y="24" width="64" height="58" rx="13" fill="#0b0b12"/><rect x="18" y="18" width="64" height="56" rx="13" fill="#2a2b31"/><rect x="21" y="20" width="58" height="50" rx="11" fill="#1b1c21"/><text x="28" y="35" font-family="Wix Madefor Display" font-weight="600" font-size="9.5" fill="#9b9ca6">отдай</text><text x="71" y="62" text-anchor="end" font-family="Wix Madefor Display" font-weight="800" font-size="23" fill="#fff" letter-spacing="-.5">ИИ</text></svg>Отдай ИИ</a>
+        <a class="logo" href="./"><img src="img/logo-key.png" alt="" width="48" height="48">Отдай ИИ</a>
         <p>Внедряем ИИ в&nbsp;бизнес-процессы: боты, ассистенты, автоматизация рутины.</p>
       </div>
       <div class="ft-contact">
