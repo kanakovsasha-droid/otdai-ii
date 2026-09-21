@@ -1,0 +1,785 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Отдай ИИ — внедрение ИИ в бизнес-процессы</title>
+<meta name="description" content="Внедряем ИИ в продажи, поддержку и отчётность: чат-боты, ИИ-ассистенты, автоматизация рутины. MVP за 2–3 недели.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0b0b12; --ink2:#4a4d5c; --muted:#6b6f80;
+  --blue:#1f56c9; --blue2:#2f6be0; --line:#d9e2f3;
+  --card:#e9f1fc; --card2:#f3f7fe;
+  --r:32px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:clip}
+section[id]{scroll-margin-top:96px}
+body{font-family:"Wix Madefor Display",system-ui,sans-serif;color:var(--ink);background:#fff;overflow-x:clip;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+/* перламутровый фон */
+.aurora{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;background:#fff}
+.aurora i{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55;animation:float 22s ease-in-out infinite alternate}
+.aurora i:nth-child(1){width:720px;height:520px;left:-180px;top:-160px;background:radial-gradient(circle,#e4dcff 0%,transparent 70%)}
+.aurora i:nth-child(2){width:680px;height:600px;right:-220px;top:12%;background:radial-gradient(circle,#d6ecff 0%,transparent 70%);animation-delay:-6s}
+.aurora i:nth-child(3){width:560px;height:460px;left:30%;bottom:-200px;background:radial-gradient(circle,#ffe3f3 0%,transparent 70%);animation-delay:-12s}
+.aurora i:nth-child(4){width:420px;height:420px;left:8%;top:55%;background:radial-gradient(circle,#dffaf6 0%,transparent 70%);animation-delay:-3s}
+@keyframes float{to{transform:translate(80px,60px) scale(1.15)}}
+
+#fluid{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;pointer-events:none}
+
+/* шапка */
+header{position:fixed;top:0;left:0;right:0;z-index:50}
+header::before{content:"";position:absolute;inset:0 0 -28px 0;z-index:-1;pointer-events:none;background:linear-gradient(rgba(255,255,255,.62),rgba(255,255,255,.22));backdrop-filter:blur(14px) saturate(1.5);-webkit-backdrop-filter:blur(14px) saturate(1.5);-webkit-mask-image:linear-gradient(#000 55%,transparent);mask-image:linear-gradient(#000 55%,transparent)}
+.nav{display:flex;align-items:center;gap:32px;height:76px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:-.01em;font-size:20px;white-space:nowrap}
+.logo svg{width:40px;height:40px;flex:none}
+.menu{display:flex;gap:30px;margin-left:auto;font-size:16px}
+.menu+.head-right{margin-left:0}
+.menu a{color:#1b1d27;transition:color .2s}
+.menu a:hover{color:var(--blue)}
+.tg{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.8);box-shadow:0 4px 20px rgba(80,90,180,.12)}
+.tg svg{width:30px;height:30px}
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:12px;height:52px;padding:0 30px;border-radius:999px;color:var(--ink);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:15px;transition:background .25s,box-shadow .25s,transform .25s;white-space:nowrap;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.btn,.chip,.btn-ghost{border:1.5px solid transparent;background:linear-gradient(rgba(255,255,255,.85),rgba(245,250,255,.85)) padding-box,linear-gradient(100deg,#7fdcf5,#a9b6ff 45%,#86d0f5 70%,#c7a8ff) border-box;box-shadow:0 0 0 1px rgba(255,255,255,.4),0 0 16px rgba(150,170,255,.22)}
+.btn:hover,.btn-ghost:hover,.chip:hover{background:linear-gradient(#fff,#fff) padding-box,linear-gradient(100deg,#7fdcf5,#a9b6ff 45%,#86d0f5 70%,#c7a8ff) border-box;box-shadow:0 0 0 1px rgba(255,255,255,.5),0 0 22px rgba(150,170,255,.4),0 10px 30px rgba(139,108,255,.18);transform:translateY(-1px)}
+.chip.on{background:linear-gradient(var(--ink),var(--ink)) padding-box,linear-gradient(100deg,#7fdcf5,#a9b6ff 45%,#86d0f5 70%,#c7a8ff) border-box;color:#fff}
+.burger{display:none;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.85);box-shadow:0 4px 20px rgba(80,90,180,.12)}
+.burger span{display:block;width:20px;height:2px;background:var(--ink);margin:4px auto;border-radius:2px}
+.head-right{display:flex;gap:16px;align-items:center;margin-left:auto}
+
+.dd{position:static}
+.dd-t{position:relative;padding:28px 0}
+.dd:hover .dd-t,.dd:focus-within .dd-t{color:var(--blue)}
+.dd:hover .dd-t::after,.dd:focus-within .dd-t::after{content:"";position:absolute;left:0;right:0;bottom:20px;height:2px;border-radius:2px;background:linear-gradient(100deg,#5fd0f5,#8f9dff 40%,#5cc0f2 65%,#b58cff)}
+.mega{position:absolute;left:0;right:0;top:76px;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .25s,transform .25s,visibility .25s;
+  background:rgba(255,255,255,.55);backdrop-filter:blur(26px) saturate(1.7);-webkit-backdrop-filter:blur(26px) saturate(1.7);box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 30px 60px rgba(60,70,160,.12);border-bottom:1px solid rgba(255,255,255,.7)}
+.dd:hover .mega,.dd:focus-within .mega{opacity:1;visibility:visible;transform:none}
+.mega-in{display:grid;grid-template-columns:repeat(4,max-content);gap:70px;padding-top:30px;padding-bottom:40px;justify-content:center}
+.mega b{display:block;color:var(--blue);font-weight:500;font-size:15px;margin-bottom:14px}
+.mega a{display:block;font-size:14px;color:#1b1d27;padding:5px 0}
+.mega a:hover{color:var(--blue)}
+
+/* кнопка с радужным контуром */
+.btn-ghost{position:relative;display:inline-flex;align-items:center;gap:14px;height:82px;padding:0 34px;border-radius:999px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:16px;color:var(--ink);}
+.btn-ghost svg,.btn svg{width:18px;height:18px}
+
+/* hero */
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 0 60px}
+.hero h1{font-size:clamp(40px,6.2vw,86px);font-weight:500;line-height:1.05;letter-spacing:-.02em;max-width:1100px}
+.hero p{font-size:clamp(18px,2.1vw,29px);line-height:1.25;color:#1c1e28;max-width:1000px;margin:34px auto 52px}
+.hero .glass-orb{position:absolute;z-index:-1;width:min(900px,90vw);aspect-ratio:1;border-radius:50%;right:-25%;top:-10%;background:conic-gradient(from 200deg,rgba(255,255,255,0),rgba(214,226,255,.55),rgba(255,226,245,.45),rgba(206,248,244,.5),rgba(255,255,255,0));filter:blur(40px);opacity:.8}
+
+/* заголовки секций */
+.sec{padding-top:110px;padding-bottom:110px}
+.h2{font-size:clamp(34px,4.6vw,64px);font-weight:500;letter-spacing:-.015em;line-height:1.08}
+.lead{font-size:clamp(18px,2vw,28px);color:var(--muted);line-height:1.3;margin-top:22px}
+.center{text-align:center}
+
+/* кто мы */
+.about p.big{font-size:clamp(22px,2.6vw,36px);line-height:1.25;color:#55586a;text-align:center;max-width:1100px;margin:0 auto}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:90px;text-align:center}
+.stat b{display:block;font-weight:400;font-size:clamp(72px,10vw,150px);line-height:1;letter-spacing:-.02em;color:#1d1e26}
+.stat span{display:block;margin-top:34px;font-size:clamp(20px,2.3vw,32px);color:#1d1e26}
+
+/* услуги */
+.services{display:grid;grid-template-columns:.85fr 1.5fr;gap:48px;align-items:start}
+.services .left{position:sticky;top:110px}
+.services .left .lead{color:#1b1d27;font-size:20px;max-width:460px}
+.cta-card{margin-top:40px;border-radius:var(--r);padding:40px 32px;background:linear-gradient(160deg,rgba(221,233,250,.9),rgba(235,242,252,.86));backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 2px 6px rgba(40,70,150,.05);max-width:440px}
+.cta-card h3{font-size:28px;font-weight:500;margin-bottom:26px}
+.svc-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.svc-grid .col{display:flex;flex-direction:column;gap:24px}
+.svc-grid .col:nth-child(2){margin-top:90px}
+.svc{border-radius:var(--r);background:linear-gradient(160deg,rgba(221,233,250,.9),rgba(235,242,252,.86));backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 2px 6px rgba(40,70,150,.05);padding:30px;min-height:300px;display:flex;flex-direction:column;transition:transform .3s,background .3s,box-shadow .3s}
+.svc:hover,.sol:hover,.step:hover{transform:translateY(-4px);background:linear-gradient(160deg,rgba(200,223,250,.96),rgba(216,232,252,.94));box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 18px 40px rgba(50,100,200,.14)}
+.ic{width:52px;height:52px;border-radius:12px;border:1px solid #c9d6ea;background:rgba(255,255,255,.55);display:grid;place-items:center;color:#5b8def}
+.ic svg{width:26px;height:26px}
+.svc h3{font-size:26px;font-weight:500;line-height:1.2;margin:34px 0 auto;padding-bottom:28px}
+.svc p{font-size:17px;line-height:1.55;color:#2a2c38}
+
+/* признаки */
+.signs{display:grid;grid-template-columns:1fr 1fr;gap:70px 80px;margin-top:90px}
+.sign .num{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--blue);color:var(--blue);display:grid;place-items:center;font-size:19px}
+.sign h3{font-size:clamp(26px,2.8vw,40px);font-weight:500;line-height:1.18;margin:26px 0 20px}
+.sign p{font-size:17px;line-height:1.65;color:var(--muted)}
+
+/* кейсы */
+.filters{display:flex;gap:18px;overflow-x:auto;padding:4px 2px 14px;margin:60px 0 50px;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.chip{position:relative;flex:none;height:64px;padding:0 32px;border-radius:999px;color:var(--ink);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:15px;transition:background .2s,color .2s}
+.cases{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px}
+.case{position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:1/1.02;background:linear-gradient(150deg,#dfe8f8 0%,#eaf0fb 55%,#e6e1fb 100%);cursor:pointer;text-align:left;transition:transform .35s}
+.case:hover{transform:translateY(-6px)}
+.case.hide{display:none}
+.case .stage{position:absolute;inset:0 0 120px;display:grid;place-items:center}
+.case .bar{position:absolute;left:24px;right:24px;bottom:24px;border-radius:26px;padding:24px 100px 24px 28px;background:rgba(255,255,255,.55);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.case .bar h3{font-size:28px;font-weight:500;line-height:1.15}
+.case .bar p{font-size:17px;margin-top:8px;color:#2a2c38}
+.case .arrow{position:absolute;right:22px;top:50%;transform:translateY(-50%);width:62px;height:62px;border-radius:50%;background:rgba(255,255,255,.85);display:grid;place-items:center;box-shadow:0 6px 20px rgba(60,80,160,.12);transition:background .2s}
+.case:hover .arrow{background:var(--ink);color:#fff}
+.case .arrow svg{width:20px;height:20px}
+.tag{z-index:3;position:absolute;top:24px;left:24px;padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.95);box-shadow:0 4px 14px rgba(40,60,140,.1);font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--blue)}
+
+/* мокапы */
+.phone{width:210px;height:430px;border-radius:38px;background:#12131a;padding:9px;box-shadow:0 30px 60px rgba(30,40,110,.25),inset 0 0 0 2px #2a2c38;transform:rotate(-6deg)}
+.phone.r{transform:rotate(5deg)}
+.scr{width:100%;height:100%;border-radius:30px;background:#f6f7fb;overflow:hidden;position:relative;font-size:10.5px;line-height:1.35}
+.scr .isl{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:62px;height:18px;border-radius:12px;background:#12131a;z-index:2}
+.scr .top{padding:34px 14px 10px;background:#fff;font-weight:700;font-size:12px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #eceef4}
+.av{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#6e8bff,#b58cff);display:grid;place-items:center;color:#fff;font-size:11px}
+.msgs{padding:10px;display:flex;flex-direction:column;gap:7px}
+.m{max-width:82%;padding:8px 10px;border-radius:14px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.m.me{align-self:flex-end;background:#7b6cf6;color:#fff}
+.m.bot{border-bottom-left-radius:4px}
+.kb{display:grid;gap:5px;margin-top:2px}
+.kb span{background:#e8ecfb;color:#3b4fd8;border-radius:9px;text-align:center;padding:6px;font-weight:600}
+.file{display:flex;gap:8px;align-items:center}
+.file i{width:28px;height:32px;border-radius:6px;background:#1f8a4c;color:#fff;font-style:normal;font-weight:700;font-size:9px;display:grid;place-items:center}
+.laptop{width:86%;transform:perspective(1200px) rotateY(-14deg) rotateX(6deg)}
+.laptop .lid{background:#12131a;border-radius:18px 18px 6px 6px;padding:10px;box-shadow:0 30px 60px rgba(30,40,110,.25)}
+.laptop .base{height:14px;background:linear-gradient(#c9cdd8,#9ea3b2);border-radius:0 0 16px 16px;margin:0 -4%}
+.dash{background:#f7f8fc;border-radius:8px;aspect-ratio:16/10;display:grid;grid-template-columns:22% 1fr;overflow:hidden;font-size:9px}
+.dash aside{background:#fff;padding:10px 8px;display:flex;flex-direction:column;gap:6px;border-right:1px solid #eceef4}
+.dash aside b{font-size:10px;margin-bottom:4px}
+.dash aside span{padding:4px 6px;border-radius:5px;color:#666}
+.dash aside span.on{background:#eaf0ff;color:var(--blue);font-weight:600}
+.dash main{padding:10px;display:grid;grid-template-rows:auto auto 1fr;gap:8px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.kpis div{background:#fff;border-radius:6px;padding:6px}
+.kpis b{display:block;font-size:13px}
+.rows div{display:grid;grid-template-columns:1.4fr 1fr .8fr;gap:6px;background:#fff;border-radius:5px;padding:5px 6px;margin-bottom:4px}
+.pill{border-radius:9px;padding:1px 6px;font-size:8px;text-align:center}
+.ai-pop{position:absolute;right:6%;bottom:8%;width:40%;background:#fff;border-radius:14px;padding:10px;font-size:10px;box-shadow:0 20px 40px rgba(30,40,110,.2);line-height:1.4}
+.ai-pop b{color:var(--blue)}
+.food{height:150px;background:radial-gradient(circle at 50% 55%,#fff 0 38%,#eee 39% 41%,transparent 42%),linear-gradient(135deg,#ffe9c7,#ffd4d9);position:relative;display:grid;place-items:center;font-size:52px}
+.scan{position:absolute;inset:18px;border:2px dashed rgba(255,255,255,.9);border-radius:14px}
+.macro{padding:10px 12px;display:grid;gap:8px}
+.macro div{display:grid;grid-template-columns:62px 1fr 34px;align-items:center;gap:6px}
+.macro u{height:6px;border-radius:4px;background:#e5e7f0;display:block;overflow:hidden;text-decoration:none}
+.macro u i{display:block;height:100%;border-radius:4px}
+.film{width:84%;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:#12131a;box-shadow:0 30px 60px rgba(30,40,110,.25);display:grid;grid-template-rows:1fr auto;transform:rotate(-3deg)}
+.film .frame{background:linear-gradient(160deg,#8fd0ff,#b59cff 50%,#ffb6d9);position:relative;display:grid;place-items:center;font-size:54px}
+.film .frame::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.5),transparent 50%)}
+.tl{display:flex;gap:4px;padding:8px;background:#1c1d26}
+.tl span{flex:1;height:26px;border-radius:4px}
+
+.sol-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:70px}
+.sol{border-radius:var(--r);background:linear-gradient(160deg,rgba(221,233,250,.9),rgba(235,242,252,.86));backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 2px 6px rgba(40,70,150,.05);padding:30px;display:flex;flex-direction:column;transition:transform .3s,background .3s,box-shadow .3s}
+.sol h3{font-size:24px;font-weight:500;line-height:1.2;margin:28px 0 14px}
+.sol p{font-size:16px;line-height:1.55;color:#3a3c48}
+.sol .gain{margin-top:auto;padding-top:22px;font-size:15px;color:var(--blue);font-weight:600}
+.sol-cta{text-align:center;margin-top:50px}
+
+/* как работаем */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:70px}
+.step{border-radius:var(--r);background:linear-gradient(160deg,rgba(221,233,250,.9),rgba(235,242,252,.86));backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 2px 6px rgba(40,70,150,.05);padding:30px;min-height:280px;display:flex;flex-direction:column}
+.step .num{font-size:15px;color:var(--blue);font-weight:600;letter-spacing:.08em}
+.step h3{font-size:24px;font-weight:500;margin:22px 0 14px;line-height:1.2}
+.step p{font-size:16px;line-height:1.55;color:#3a3c48}
+.step .when{margin-top:auto;padding-top:20px;font-size:14px;color:var(--muted)}
+
+/* faq */
+.faq{margin-top:60px;display:grid;gap:24px}
+.q{border-radius:28px;background:linear-gradient(160deg,rgba(221,233,250,.9),rgba(235,242,252,.86));backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 2px 6px rgba(40,70,150,.05);overflow:hidden}
+.q summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:24px;padding:32px 34px;font-size:clamp(20px,2.2vw,30px);font-weight:500;line-height:1.3}
+.q summary::-webkit-details-marker{display:none}
+.q summary i{flex:none;width:34px;height:34px;position:relative}
+.q summary i::before,.q summary i::after{content:"";position:absolute;left:0;right:0;top:50%;height:1.5px;background:var(--ink);transition:transform .3s,background .3s,box-shadow .3s}
+.q summary i::after{transform:rotate(90deg)}
+.q[open] summary i::after{transform:rotate(0)}
+.q p{padding:0 34px 32px;font-size:18px;line-height:1.6;color:#3a3c48;max-width:900px}
+
+/* финальный CTA */
+.final{border-radius:44px;padding:80px 70px;background:linear-gradient(120deg,#dfe9fb,#ece6fd 60%,#fde8f4);display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:center;position:relative;overflow:hidden}
+.final h2{font-size:clamp(32px,4vw,56px);font-weight:500;line-height:1.1}
+.final p{font-size:20px;line-height:1.5;color:#3a3c48;margin:24px 0 36px;max-width:560px}
+.final .btns{display:flex;gap:14px;flex-wrap:wrap}
+.ring{justify-self:center;width:260px;height:260px;position:relative}
+.ring svg.txt{width:100%;height:100%;animation:spin 18s linear infinite}
+.ring text{font-size:15px;text-transform:uppercase;fill:var(--ink);font-weight:600}
+.ring a{position:absolute;inset:50px;border-radius:50%;background:linear-gradient(135deg,#7fd8ff,#9d86ff 50%,#ffa6dc);display:grid;place-items:center;color:#fff;transition:transform .3s;box-shadow:inset 0 2px 0 rgba(255,255,255,.6),0 18px 40px rgba(139,108,255,.3)}
+.ring a:hover{transform:scale(1.05)}
+.ring a svg{width:44px;height:44px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+footer{position:relative;margin-top:40px;padding:80px 0 40px;font-size:15px;background:rgba(255,255,255,.35);backdrop-filter:blur(30px) saturate(1.5);-webkit-backdrop-filter:blur(30px) saturate(1.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.8)}
+.ft-top{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;padding-bottom:50px;border-bottom:1px solid rgba(120,130,190,.18)}
+.ft-brand p{margin-top:16px;color:var(--muted);max-width:340px;line-height:1.5}
+.ft-contact{display:flex;flex-direction:column;align-items:flex-start;gap:14px}
+.ft-k{color:var(--muted);font-size:14px}
+.ft-tg{display:flex;align-items:center;gap:12px;font-size:30px;font-weight:500}
+.ft-tg svg{width:44px;height:44px}
+.ft-tg:hover{color:var(--blue)}
+.ft-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;padding:50px 0}
+.ft-cols b{display:block;font-weight:600;margin-bottom:14px}
+.ft-cols a{display:block;color:#3a3c48;padding:6px 0}
+.ft-cols a:hover,.ft-bot a:hover{color:var(--blue)}
+.ft-bot{display:flex;justify-content:space-between;gap:20px;color:var(--muted);padding-top:24px;border-top:1px solid rgba(120,130,190,.18)}
+
+/* модалка кейса */
+dialog{margin:auto;border:0;border-radius:36px;max-width:760px;width:calc(100% - 32px);padding:0;background:#fff;box-shadow:0 40px 100px rgba(20,30,90,.25)}
+dialog::backdrop{background:rgba(20,24,50,.35);backdrop-filter:blur(6px)}
+.dlg{padding:48px 48px 44px;position:relative}
+.dlg .x{position:absolute;right:20px;top:20px;width:48px;height:48px;border-radius:50%;background:#eef3fc;font-size:26px;line-height:1}
+.dlg .k{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);font-weight:600}
+.dlg h3{font-size:36px;font-weight:500;margin:10px 0 28px;line-height:1.15;padding-right:40px}
+.dlg h4{font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:24px 0 8px;font-weight:600}
+.dlg p,.dlg li{font-size:18px;line-height:1.6;color:#23252f}
+.dlg ul{padding-left:20px}
+.dlg .stack{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.dlg .stack span{padding:6px 14px;border-radius:999px;background:#eef3fc;font-size:14px}
+
+/* появление */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}
+.rv.in{opacity:1;transform:none}
+
+/* мобилка */
+@media (max-width:1100px){
+  .sol-grid{grid-template-columns:1fr 1fr}
+  .menu,.head-right .btn{display:none}
+  .menu+.head-right{margin-left:auto}
+  .burger{display:block}
+  .menu.open{display:flex;position:fixed;top:76px;left:0;right:0;flex-direction:column;gap:0;background:rgba(255,255,255,.96);backdrop-filter:blur(18px);padding:10px 24px 24px;font-size:20px}
+  .menu.open a{padding:14px 0;border-bottom:1px solid var(--line)}
+  .mega{display:none}
+  .dd-t{display:block;padding:14px 0}
+  .dd:hover .dd-t::after{display:none}
+  .steps{grid-template-columns:1fr 1fr}
+}
+@media (max-width:860px){
+  .services,.signs,.final{grid-template-columns:1fr}
+  .cases{grid-template-columns:minmax(0,1fr)}
+  .services .left{position:static}
+  .svc-grid{grid-template-columns:1fr}
+  .svc-grid .col:nth-child(2){margin-top:0}
+  .svc{min-height:0}
+  .final{padding:50px 28px}
+  .ring{width:200px;height:200px}
+  .ring a{inset:38px}
+}
+@media (max-width:600px){
+  .wrap{padding:0 16px}
+  .nav{height:68px;gap:12px}
+  .tg{width:48px;height:48px}
+  .sec{padding-top:80px;padding-bottom:80px}
+  .stats{grid-template-columns:1fr;gap:50px;margin-top:60px}
+  .stat span{margin-top:12px}
+  .steps{grid-template-columns:1fr}
+  .ft-cols{grid-template-columns:1fr 1fr}
+  .ft-tg{font-size:24px}
+  .sol-grid{grid-template-columns:1fr}
+  .step{min-height:0}
+  .btn-ghost{height:66px;padding:0 26px;font-size:14px}
+  .chip{height:52px;padding:0 22px;font-size:13px}
+  .case{aspect-ratio:auto;height:520px}
+  .case .bar{left:14px;right:14px;bottom:14px;padding:18px 84px 18px 20px}
+  .case .bar h3{font-size:22px}
+  .case .bar p{font-size:15px}
+  .case .arrow{width:52px;height:52px;right:16px}
+  .q summary{padding:24px 22px}
+  .q p{padding:0 22px 24px;font-size:16px}
+  .dlg{padding:40px 24px 30px}
+  .dlg h3{font-size:28px}
+  .hero{min-height:84vh}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="aurora"><i></i><i></i><i></i><i></i></div>
+<canvas id="fluid" aria-hidden="true"></canvas>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top" aria-label="Отдай ИИ — на главную">
+      <svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38c6ff"/><stop offset=".55" stop-color="#8b6cff"/><stop offset="1" stop-color="#ff8fd0"/></linearGradient></defs><rect x="3" y="9" width="42" height="30" rx="10" fill="url(#lg)"/><path d="M13 17v14l9-14v14M26 17v14l9-14v14" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Отдай ИИ
+    </a>
+    <nav class="menu" id="menu">
+      <div class="dd"><a href="#services" class="dd-t">Услуги</a>
+        <div class="mega"><div class="wrap mega-in">
+          <div><b>ИИ-решения</b><a href="#services">ИИ-чат-боты</a><a href="#services">ИИ-ассистенты</a><a href="#solutions">Умный поиск по&nbsp;базе</a><a href="#solutions">Речевая аналитика</a><a href="#services">Распознавание документов</a></div>
+          <div><b>Автоматизация</b><a href="#services">Отчётность и&nbsp;сводки</a><a href="#cases">Воронки продаж в&nbsp;Telegram</a><a href="#solutions">Документы в&nbsp;1С</a><a href="#solutions">ИИ-рекрутер</a></div>
+          <div><b>Разработка</b><a href="#services">Telegram Mini Apps</a><a href="#services">Мобильные приложения</a><a href="#cases">Веб-сервисы и&nbsp;SaaS</a><a href="#process">MVP за&nbsp;2–3 недели</a></div>
+          <div><b>ИИ-контент</b><a href="#cases">Рекламные ролики</a><a href="#services">Презентации и&nbsp;визуал</a></div>
+        </div></div>
+      </div>
+      <a href="#cases">Кейсы</a>
+      <a href="#solutions">Решения</a>
+      <a href="#process">Как работаем</a>
+      <a href="#faq">Вопросы</a>
+      <a href="#contact">Контакты</a>
+    </nav>
+    <div class="head-right">
+      <a class="btn" href="#contact">Связаться</a>
+      <button class="burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero wrap">
+    <div class="glass-orb"></div>
+    <h1 class="rv">Внедряем ИИ в&nbsp;бизнес-процессы</h1>
+    <p class="rv">Чат-боты, ИИ-ассистенты и&nbsp;автоматизация рутины: заявки, отчёты и&nbsp;ответы клиентам делает ИИ, а&nbsp;ваша команда занимается тем, что приносит деньги.</p>
+    <a class="btn-ghost rv" href="#contact">Получить консультацию
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></a>
+  </section>
+
+  <section class="sec about wrap" id="about">
+    <p class="big rv">Мы небольшая команда, которая каждый день работает с&nbsp;ИИ. Собираем ботов, ассистентов и&nbsp;сервисы на&nbsp;базе больших языковых моделей и&nbsp;доводим их до&nbsp;прода, а&nbsp;не&nbsp;до&nbsp;презентации.</p>
+    <div class="stats">
+      <div class="stat rv"><b>12+</b><span>запущенных продуктов</span></div>
+      <div class="stat rv"><b>17</b><span>дней от ТЗ до&nbsp;прода</span></div>
+      <div class="stat rv"><b>24/7</b><span>работают наши боты</span></div>
+    </div>
+  </section>
+
+  <section class="sec wrap" id="services">
+    <div class="services">
+      <div class="left rv">
+        <h2 class="h2">Что делаем</h2>
+        <p class="lead">Берём процесс, на&nbsp;который у&nbsp;вас уходят часы, и&nbsp;отдаём его ИИ.</p>
+        <div class="cta-card">
+          <h3>Не нашли свою задачу?</h3>
+          <a class="btn" href="#contact">Обсудить задачу</a>
+        </div>
+      </div>
+      <div class="svc-grid">
+        <div class="col">
+          <div class="svc rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/></svg></div><h3>ИИ-чат-боты</h3><p>Отвечают клиентам в&nbsp;Telegram, WhatsApp и&nbsp;на&nbsp;сайте за&nbsp;секунды, ночью и&nbsp;в&nbsp;праздники. Сложное передают менеджеру.</p></div>
+          <div class="svc rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div><h3>Автоматизация отчётности</h3><p>Сотрудники сдают цифры боту, он считает и&nbsp;присылает руководителю сводку и&nbsp;Excel с&nbsp;живыми формулами.</p></div>
+          <div class="svc rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg></div><h3>Приложения и&nbsp;Mini Apps</h3><p>Мобильные приложения и&nbsp;Telegram Mini Apps с&nbsp;ИИ внутри: от&nbsp;прототипа до&nbsp;публикации в&nbsp;сторах.</p></div>
+        </div>
+        <div class="col">
+          <div class="svc rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="4"/><path d="M12 8V4M9 14h.01M15 14h.01M2 13v2M22 13v2"/></svg></div><h3>ИИ-ассистенты</h3><p>Помощник, который знает ваши документы, регламенты и&nbsp;базу: отвечает сотрудникам и&nbsp;клиентам по&nbsp;делу, а&nbsp;не&nbsp;«в&nbsp;общем».</p></div>
+          <div class="svc rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 12h10"/></svg></div><h3>Распознавание фото и&nbsp;документов</h3><p>Чеки, накладные, анкеты, фото товара превращаются в&nbsp;данные в&nbsp;вашей системе без ручного ввода.</p></div>
+          <div class="svc rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5v5l4.5-2.5z"/></svg></div><h3>ИИ-контент</h3><p>Рекламные ролики, презентации и&nbsp;визуал с&nbsp;помощью генеративных моделей: быстрее и&nbsp;дешевле продакшна.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec wrap" id="signs">
+    <h2 class="h2 center rv">5 признаков, что вам пора внедрять ИИ</h2>
+    <p class="lead center rv">В 2026 году это вопрос конкуренции, а&nbsp;не&nbsp;моды.</p>
+    <div class="signs">
+      <div class="sign rv"><div class="num">1</div><h3>Сотрудники тонут в&nbsp;рутине</h3><p>Копируют данные из&nbsp;таблицы в&nbsp;таблицу, отвечают на&nbsp;одни и&nbsp;те&nbsp;же вопросы, собирают отчёты руками. Это первое, что забирает ИИ.</p></div>
+      <div class="sign rv"><div class="num">2</div><h3>Заявки теряются ночью и&nbsp;в&nbsp;выходные</h3><p>Клиент написал в&nbsp;23:00, ответ получил утром, а&nbsp;купил уже у&nbsp;конкурента. Бот отвечает сразу и&nbsp;записывает контакт.</p></div>
+      <div class="sign rv"><div class="num">3</div><h3>Отчёты собираются неделю</h3><p>Руководитель ждёт цифры до&nbsp;середины месяца, а&nbsp;в&nbsp;таблице кто-то сломал формулу. Автосбор даёт сводку в&nbsp;день сдачи.</p></div>
+      <div class="sign rv"><div class="num">4</div><h3>Новичков долго вводить в&nbsp;курс</h3><p>Регламенты разбросаны по&nbsp;папкам и&nbsp;чатам. ИИ-ассистент по&nbsp;базе знаний отвечает новичку за&nbsp;секунды вместо старшего коллеги.</p></div>
+      <div class="sign rv"><div class="num">5</div><h3>Конкуренты уже автоматизировались</h3><p>Они отвечают быстрее и&nbsp;тратят меньше на&nbsp;штат. Разрыв копится каждый месяц.</p></div>
+    </div>
+  </section>
+
+  <section class="sec wrap" id="cases">
+    <h2 class="h2 center rv">Реальные проекты лучше любых обещаний</h2>
+    <p class="lead center rv">Всё ниже работает у&nbsp;живых пользователей.</p>
+    <div class="filters" id="filters">
+      <button class="chip on" data-f="all">Все</button>
+      <button class="chip" data-f="ai">ИИ-ассистенты</button>
+      <button class="chip" data-f="bot">Чат-боты</button>
+      <button class="chip" data-f="web">Веб-сервисы</button>
+      <button class="chip" data-f="app">Приложения</button>
+      <button class="chip" data-f="content">ИИ-контент</button>
+    </div>
+
+    <div class="cases">
+      <!-- UniMate -->
+      <button class="case rv" data-cat="ai app bot" data-case="unimate">
+        <span class="tag">ИИ-ассистент</span>
+        <div class="stage">
+          <div class="phone"><div class="scr"><div class="isl"></div>
+            <div class="top"><div class="av">U</div>UniMate · помощник</div>
+            <div class="msgs">
+              <div class="m bot">Привет! Завтра семинар по&nbsp;английскому. Повторим Present Perfect?</div>
+              <div class="m me">Да, дай 5 заданий</div>
+              <div class="m bot">1/5. Выбери верный вариант:<br><b>I … never been to London.</b></div>
+              <div class="kb"><span>have</span><span>has</span><span>am</span></div>
+              <div class="m bot">+20 XP 🔥 Серия: 6 дней</div>
+            </div>
+          </div></div>
+        </div>
+        <div class="bar"><h3>ИИ-ассистент для студентов</h3><p>Telegram Mini App для вуза: подготовка к&nbsp;парам и&nbsp;зачётам</p>
+          <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></div>
+      </button>
+
+      <!-- Domiro -->
+      <button class="case rv" data-cat="web ai app" data-case="domiro">
+        <span class="tag">SaaS-платформа</span>
+        <div class="stage">
+          <div class="laptop"><div class="lid"><div class="dash">
+            <aside><b>Domiro</b><span class="on">Заявки</span><span>Дома</span><span>Жители</span><span>Платежи</span><span>ИИ-агент</span></aside>
+            <main>
+              <div class="kpis"><div>Новые<b>14</b></div><div>В работе<b>31</b></div><div>Закрыто<b>286</b></div></div>
+              <div class="rows">
+                <div><span>Протечка, кв. 42</span><span>Сантехник</span><span class="pill" style="background:#fff1d6;color:#a86b00">в работе</span></div>
+                <div><span>Не работает лифт</span><span>Подрядчик</span><span class="pill" style="background:#e3f6ea;color:#1c7a43">закрыта</span></div>
+                <div><span>Пропуск гостя</span><span>Охрана</span><span class="pill" style="background:#eaf0ff;color:#1f56c9">новая</span></div>
+                <div><span>Счёт за сентябрь</span><span>Бухгалтерия</span><span class="pill" style="background:#e3f6ea;color:#1c7a43">закрыта</span></div>
+              </div>
+            </main>
+          </div></div><div class="base"></div></div>
+          <div class="ai-pop"><b>ИИ-агент:</b> житель спрашивает про счёт за&nbsp;сентябрь. Ответил и&nbsp;приложил квитанцию ✓</div>
+        </div>
+        <div class="bar"><h3>Платформа для жилых комплексов</h3><p>Веб-кабинеты, iOS и&nbsp;Android с&nbsp;ИИ-агентом для жителей</p>
+          <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></div>
+      </button>
+
+      <!-- Финансовый бот -->
+      <button class="case rv" data-cat="bot" data-case="finance">
+        <span class="tag">Автоматизация</span>
+        <div class="stage">
+          <div class="phone r"><div class="scr"><div class="isl"></div>
+            <div class="top"><div class="av" style="background:linear-gradient(135deg,#27b36b,#16a2c9)">₽</div>Финансы · бот</div>
+            <div class="msgs">
+              <div class="m bot">Сдаём цифры за&nbsp;сентябрь. Выручка без НДС?</div>
+              <div class="m me">2 391 274,34</div>
+              <div class="m bot">Принял ✓ Осталось сдать: 1 из&nbsp;5</div>
+              <div class="m bot">Все цифры собраны. Сводка за&nbsp;сентябрь:
+                <div class="file" style="margin-top:6px"><i>XLSX</i><span><b>Расходы_сентябрь.xlsx</b><br>формулы сохранены</span></div></div>
+            </div>
+          </div></div>
+        </div>
+        <div class="bar"><h3>Бот вместо Google-таблицы</h3><p>Сбор финансовых цифр с&nbsp;команды и&nbsp;сводка руководителю</p>
+          <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></div>
+      </button>
+
+      <!-- Planiro -->
+      <button class="case rv" data-cat="app ai" data-case="planiro">
+        <span class="tag">Компьютерное зрение</span>
+        <div class="stage">
+          <div class="phone"><div class="scr"><div class="isl"></div>
+            <div class="food" style="padding-top:20px">🥗<div class="scan"></div></div>
+            <div style="padding:10px 12px 0;font-weight:700;font-size:12px">Салат с&nbsp;курицей · 320 г</div>
+            <div style="padding:2px 12px;color:#777">Распознано по&nbsp;фото за&nbsp;2 сек</div>
+            <div class="macro">
+              <div><span>Калории</span><u><i style="width:62%;background:#ff8a5c"></i></u><b>412</b></div>
+              <div><span>Белки</span><u><i style="width:70%;background:#6e8bff"></i></u><b>34 г</b></div>
+              <div><span>Жиры</span><u><i style="width:45%;background:#ffc53d"></i></u><b>21 г</b></div>
+              <div><span>Углеводы</span><u><i style="width:30%;background:#3ccf91"></i></u><b>18 г</b></div>
+            </div>
+            <div style="margin:6px 12px;background:#7b6cf6;color:#fff;border-radius:10px;text-align:center;padding:8px;font-weight:700">Добавить в&nbsp;дневник</div>
+          </div></div>
+        </div>
+        <div class="bar"><h3>Распознавание еды по&nbsp;фото</h3><p>Мобильное приложение: ИИ считает КБЖУ с&nbsp;одного снимка</p>
+          <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></div>
+      </button>
+
+      <!-- Воронка -->
+      <button class="case rv" data-cat="bot" data-case="funnel">
+        <span class="tag">Продажи</span>
+        <div class="stage">
+          <div class="phone r"><div class="scr"><div class="isl"></div>
+            <div class="top"><div class="av" style="background:linear-gradient(135deg,#ff7a59,#ff4f9a)">S</div>Онлайн-курс · бот</div>
+            <div class="msgs">
+              <div class="m bot">6 уроков, доступ навсегда. Программа ниже 👇</div>
+              <div class="kb"><span>Хочу присоединиться</span></div>
+              <div class="m bot">Стоимость курса: 4 990 ₽</div>
+              <div class="kb"><span>💳 Оплатить</span></div>
+              <div class="m me">Оплатил</div>
+              <div class="m bot">Оплата прошла ✓ Вот ваша ссылка в&nbsp;закрытый канал</div>
+            </div>
+          </div></div>
+        </div>
+        <div class="bar"><h3>Воронка продаж в&nbsp;Telegram</h3><p>Бот сам прогревает, принимает оплату и&nbsp;выдаёт доступ</p>
+          <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></div>
+      </button>
+
+      <!-- Видео -->
+      <button class="case rv" data-cat="content" data-case="video">
+        <span class="tag">ИИ-видео</span>
+        <div class="stage">
+          <div class="film"><div class="frame">🏙️</div>
+            <div class="tl"><span style="background:#8fd0ff"></span><span style="background:#a6b4ff"></span><span style="background:#b59cff"></span><span style="background:#e0a6ff"></span><span style="background:#ffb6d9"></span><span style="background:#ffd0b0"></span><span style="background:#bff0d9"></span></div>
+          </div>
+        </div>
+        <div class="bar"><h3>Анимационный ролик для&nbsp;госпрезентации</h3><p>17 сцен с&nbsp;одним героем и&nbsp;озвучкой, полностью на&nbsp;ИИ</p>
+          <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></div>
+      </button>
+    </div>
+  </section>
+
+  <section class="sec wrap" id="solutions">
+    <h2 class="h2 center rv">Готовые решения</h2>
+    <p class="lead center rv">Сценарии, которые мы собираем под ваш бизнес за&nbsp;2–3 недели.</p>
+    <div class="sol-grid">
+      <div class="sol rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></div><h3>ИИ-рекрутер для массового найма</h3><p>Разбирает отклики с hh.ru, проводит первое интервью в чате и отдаёт HR только подходящих кандидатов с оценкой.</p><span class="gain">Меньше часов на первичный отбор</span></div>
+      <div class="sol rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="7" rx="2"/><rect x="17" y="14" width="4" height="7" rx="2"/></svg></div><h3>Речевая аналитика звонков</h3><p>Расшифровывает звонки отдела продаж, проверяет скрипт и возражения, отмечает звонки, где потеряли клиента.</p><span class="gain">Проверка 100% звонков, а не выборки</span></div>
+      <div class="sol rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-8-4.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6.5-8 11-8 11z"/><path d="M8 12h2l1.5-3 2 5 1.5-2h1"/></svg></div><h3>ИИ-консультант для клиник</h3><p>Отвечает пациентам про услуги, цены и подготовку к анализам, записывает на приём и напоминает о визите.</p><span class="gain">Администратор не висит на телефоне</span></div>
+      <div class="sol rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v8a2 2 0 0 0 2 2v8M9 3v8M7 3v6M17 21V3c-2 1-3 4-3 8h3"/></svg></div><h3>Помощник для ресторанов и HoReCa</h3><p>Принимает брони и вопросы гостей, собирает отзывы и сводку для управляющего по итогам смены.</p><span class="gain">Ни одна бронь не теряется</span></div>
+      <div class="sol rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-5-5"/></svg></div><h3>Умный поиск по базе знаний</h3><p>Сотрудник спрашивает своими словами и получает ответ со ссылкой на регламент, договор или инструкцию.</p><span class="gain">Новичок разбирается сам</span></div>
+      <div class="sol rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></div><h3>Документы в 1С без ручного ввода</h3><p>Сканы накладных, счетов и актов распознаются и попадают в учётную систему, спорные места подсвечиваются.</p><span class="gain">Бухгалтерия не перебивает бумаги</span></div>
+    </div>
+    <div class="sol-cta rv"><a class="btn" href="#contact">Подобрать решение</a></div>
+  </section>
+
+  <section class="sec wrap" id="process">
+    <h2 class="h2 center rv">Как работаем</h2>
+    <p class="lead center rv">Без полугодовых внедрений. Первый результат через пару недель.</p>
+    <div class="steps">
+      <div class="step rv"><span class="num">01</span><h3>Разбор процесса</h3><p>Созваниваемся, смотрим, где у&nbsp;вас уходят часы, и&nbsp;считаем, что даст автоматизация.</p><span class="when">Бесплатно · 1 день</span></div>
+      <div class="step rv"><span class="num">02</span><h3>Прототип</h3><p>Собираем рабочий вариант на&nbsp;ваших данных, чтобы вы потрогали его до&nbsp;большой разработки.</p><span class="when">3–5 дней</span></div>
+      <div class="step rv"><span class="num">03</span><h3>Внедрение</h3><p>Подключаем к&nbsp;вашим CRM, таблицам и&nbsp;мессенджерам, обучаем команду.</p><span class="when">1–3 недели</span></div>
+      <div class="step rv"><span class="num">04</span><h3>Поддержка</h3><p>Следим за&nbsp;качеством ответов, дообучаем и&nbsp;добавляем новые сценарии.</p><span class="when">По подписке</span></div>
+    </div>
+  </section>
+
+  <section class="sec wrap" id="faq">
+    <h2 class="h2 center rv">Частые вопросы</h2>
+    <div class="faq">
+      <details class="q rv"><summary>Сколько стоит внедрение?<i></i></summary><p>Зависит от&nbsp;задачи. Простой бот для заявок и&nbsp;сложная платформа с&nbsp;ИИ-агентом стоят очень по-разному. После первого созвона даём фиксированную цену и&nbsp;срок, без сюрпризов в&nbsp;процессе.</p></details>
+      <details class="q rv"><summary>Что будет с&nbsp;данными моих клиентов?<i></i></summary><p>Храним данные на&nbsp;вашем сервере или в&nbsp;России, если это требуется по&nbsp;152-ФЗ. Можем подписать NDA. Ключи и&nbsp;доступы остаются у&nbsp;вас.</p></details>
+      <details class="q rv"><summary>ИИ не наговорит клиентам ерунды?<i></i></summary><p>Ассистент отвечает только по&nbsp;вашей базе знаний и&nbsp;правилам. Если вопрос за&nbsp;пределами, он честно говорит, что уточнит, и&nbsp;передаёт диалог человеку.</p></details>
+      <details class="q rv"><summary>У нас нет IT-отдела. Справимся?<i></i></summary><p>Да. Мы берём на&nbsp;себя настройку, сервер и&nbsp;поддержку. Вашей команде нужно только пользоваться: обычно это Telegram или привычная таблица.</p></details>
+      <details class="q rv"><summary>Можно начать с&nbsp;маленькой задачи?<i></i></summary><p>Так даже лучше. Начинаем с&nbsp;одного процесса, показываем результат и&nbsp;только потом расширяемся.</p></details>
+    </div>
+  </section>
+
+  <section class="sec wrap" id="contact">
+    <div class="final rv">
+      <div>
+        <h2>Какую рутину отдадим ИИ?</h2>
+        <p>Напишите пару строк о&nbsp;задаче в&nbsp;Telegram. Ответим в&nbsp;течение дня и&nbsp;предложим, как её автоматизировать.</p>
+        <div class="btns">
+          <a class="btn" href="https://t.me/ke11y7" target="_blank" rel="noopener">Написать в&nbsp;Telegram</a>
+        </div>
+      </div>
+      <div class="ring">
+        <svg class="txt" viewBox="0 0 200 200" aria-hidden="true"><defs><path id="c" d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/></defs><text><textPath href="#c" textLength="498" lengthAdjust="spacing">получить консультацию · в Telegram ·</textPath></text></svg>
+        <a href="https://t.me/ke11y7" target="_blank" rel="noopener" aria-label="Получить консультацию в Telegram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="ft-top">
+      <div class="ft-brand">
+        <a class="logo" href="#top"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="lg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38c6ff"/><stop offset=".55" stop-color="#8b6cff"/><stop offset="1" stop-color="#ff8fd0"/></linearGradient></defs><rect x="3" y="9" width="42" height="30" rx="10" fill="url(#lg2)"/><path d="M13 17v14l9-14v14M26 17v14l9-14v14" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Отдай ИИ</a>
+        <p>Внедряем ИИ в&nbsp;бизнес-процессы: боты, ассистенты, автоматизация рутины.</p>
+      </div>
+      <div class="ft-contact">
+        <span class="ft-k">Пишите в&nbsp;Telegram</span>
+        <a class="ft-tg" href="https://t.me/ke11y7" target="_blank" rel="noopener"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="16" fill="url(#lg2)"/><path d="M7.5 15.4l15-5.8c.7-.3 1.3.2 1.1 1.2l-2.6 12c-.2.9-.7 1.1-1.4.7l-3.9-2.9-1.9 1.8c-.2.2-.4.4-.8.4l.3-4 7.2-6.5c.3-.3-.1-.4-.5-.2l-8.9 5.6-3.8-1.2c-.8-.3-.8-.8.2-1.1z" fill="#fff"/></svg>@ke11y7</a>
+        <a class="btn" href="https://t.me/ke11y7" target="_blank" rel="noopener">Получить консультацию</a>
+      </div>
+    </div>
+    <div class="ft-cols">
+      <div><b>ИИ-решения</b><a href="#services">ИИ-чат-боты</a><a href="#services">ИИ-ассистенты</a><a href="#solutions">Умный поиск</a><a href="#solutions">Речевая аналитика</a><a href="#services">Распознавание документов</a></div>
+      <div><b>Автоматизация</b><a href="#services">Отчётность</a><a href="#cases">Воронки продаж</a><a href="#solutions">Документы в&nbsp;1С</a><a href="#solutions">ИИ-рекрутер</a></div>
+      <div><b>Разработка</b><a href="#services">Telegram Mini Apps</a><a href="#services">Мобильные приложения</a><a href="#cases">Веб-сервисы</a><a href="#services">ИИ-контент</a></div>
+      <div><b>Навигация</b><a href="#cases">Кейсы</a><a href="#solutions">Решения</a><a href="#process">Как работаем</a><a href="#faq">Вопросы</a></div>
+    </div>
+    <div class="ft-bot"><span>© 2026 Отдай ИИ</span><a href="https://t.me/ke11y7" target="_blank" rel="noopener">t.me/ke11y7</a></div>
+  </div>
+</footer>
+
+<dialog id="dlg"><div class="dlg"><button class="x" id="dlgx" aria-label="Закрыть">×</button><div id="dlgbody"></div></div></dialog>
+
+<script>
+const CASES={
+  unimate:{k:"ИИ-ассистент · Telegram Mini App",t:"ИИ-ассистент для студентов вуза",
+    task:"Студентам нужно готовиться к парам и зачётам, а преподавателям — видеть, кто реально занимается. Заказчик хотел продукт внутри Telegram, без установки приложений.",
+    sol:["Telegram Mini App и бот с ИИ-ядром: объясняет темы, генерирует задания и проверяет ответы","Игровые механики: опыт, серии дней, рейтинг группы","Задания на аудирование с озвучкой","Админка для кураторов и подписка FREE / PRO"],
+    res:"От ТЗ до прода за 17 дней. Пилот запущен на первом курсе, дальше доработки по фидбеку студентов.",
+    stack:["LLM","Telegram Mini App","Node.js","PostgreSQL","Docker"]},
+  domiro:{k:"SaaS-платформа · веб + iOS + Android",t:"Платформа для жилых комплексов с ИИ-агентом",
+    task:"Застройщикам и управляющим компаниям нужен единый сервис: заявки жителей, платежи, документы, пропуска. Плюс ответы на типовые вопросы без нагрузки на диспетчера.",
+    sol:["Веб-кабинеты для платформы, партнёров, застройщиков и УК со строгим разделением доступа","Приложение жителя на iOS и Android","ИИ-агент, который отвечает жителям по базе конкретного ЖК","Пуш-уведомления, чат по заявке с фото, импорт жителей из CSV"],
+    res:"Платформа работает на проде, готовится к запуску в Узбекистане и Саудовской Аравии.",
+    stack:["Next.js","Prisma","PostgreSQL","SwiftUI","Kotlin","LLM"]},
+  finance:{k:"Автоматизация · Telegram-бот",t:"Бот вместо Google-таблицы расходов",
+    task:"Раз в месяц пять сотрудников вносили цифры в общую Google-таблицу. Формулы ломались, копейки терялись из-за формата ячеек, сводку ждали неделями.",
+    sol:["Бот сам спрашивает у каждого только его цифры и проверяет формат","Считает производные показатели с точностью до копейки","Напоминает 5-го и 9-го числа, дедлайн сдачи — 10-е","Отдаёт владельцу сводку текстом и Excel с живыми формулами"],
+    res:"Таблица больше не нужна: сводка приходит в день сдачи последней цифры, и числа сходятся с контрольными.",
+    stack:["TypeScript","grammY","SQLite","ExcelJS"]},
+  planiro:{k:"Мобильное приложение · компьютерное зрение",t:"Распознавание еды по фото",
+    task:"В трекере питания пользователи бросают дневник, потому что вбивать каждый продукт вручную долго.",
+    sol:["Фото тарелки отправляется в мультимодальную модель","ИИ определяет блюдо, примерный вес и КБЖУ","Поля заполняются автоматически, пользователь только подтверждает","Приложения для iOS и Android"],
+    res:"Запись приёма пищи занимает пару секунд вместо минуты ручного ввода.",
+    stack:["Vision LLM","SwiftUI","Kotlin"]},
+  funnel:{k:"Продажи · Telegram-бот",t:"Воронка продаж онлайн-курса в Telegram",
+    task:"Автор курса вручную отвечал на вопросы, выставлял счета и добавлял оплативших в закрытый канал.",
+    sol:["Пошаговая воронка: знакомство, программа, для кого курс, цена","Оплата через ЮKassa прямо в боте","Проверка платежа и одноразовая ссылка в закрытый канал","Админ-панель: тексты и картинки воронки меняются без программиста"],
+    res:"Продажа работает круглосуточно без участия автора: от первого сообщения до доступа к урокам.",
+    stack:["Python","aiogram","ЮKassa","SQLite"]},
+  video:{k:"ИИ-контент · видео",t:"Анимационный ролик для госпрезентации",
+    task:"Для презентации продукта государственным заказчикам нужен был мультфильм о жизни в умном доме. Бюджета и сроков на студию анимации не было.",
+    sol:["Сценарий и раскадровка на 17 сцен","Единый персонаж во всех кадрах через character sheet","Генерация кадров и анимация нейросетями","Закадровый голос и финальный монтаж"],
+    res:"Готовый ролик на 1:18 за несколько дней, в разы дешевле классического продакшна.",
+    stack:["Nano Banana","Kling","ИИ-озвучка"]}
+};
+const dlg=document.getElementById("dlg"),body=document.getElementById("dlgbody");
+document.querySelectorAll(".case").forEach(el=>el.addEventListener("click",()=>{
+  const c=CASES[el.dataset.case];
+  body.innerHTML=`<div class="k">${c.k}</div><h3>${c.t}</h3><h4>Задача</h4><p>${c.task}</p><h4>Что сделали</h4><ul>${c.sol.map(s=>`<li>${s}</li>`).join("")}</ul><h4>Результат</h4><p>${c.res}</p><div class="stack">${c.stack.map(s=>`<span>${s}</span>`).join("")}</div>`;
+  dlg.showModal();
+}));
+document.getElementById("dlgx").onclick=()=>dlg.close();
+dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close()});
+
+document.getElementById("filters").addEventListener("click",e=>{
+  const b=e.target.closest(".chip"); if(!b) return;
+  document.querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",c===b));
+  const f=b.dataset.f;
+  document.querySelectorAll(".case").forEach(c=>c.classList.toggle("hide",f!=="all"&&!c.dataset.cat.split(" ").includes(f)));
+  reveal();
+});
+
+const menu=document.getElementById("menu");
+document.getElementById("burger").onclick=()=>menu.classList.toggle("open");
+menu.querySelectorAll("a").forEach(a=>a.onclick=()=>menu.classList.remove("open"));
+
+// появление блоков: проверка на scroll, без IntersectionObserver (быстрая прокрутка и якоря не оставляют блоки невидимыми)
+const rvs=[...document.querySelectorAll(".rv")];
+function reveal(){const h=innerHeight;for(const el of rvs){if(!el.classList.contains("in")&&el.getBoundingClientRect().top<h*0.92)el.classList.add("in")}}
+let tick=false;addEventListener("scroll",()=>{if(!tick){tick=true;requestAnimationFrame(()=>{reveal();tick=false})}},{passive:true});
+addEventListener("resize",reveal);addEventListener("hashchange",()=>setTimeout(reveal,50));reveal();
+</script>
+<script>
+// Жидкость от мыши: stable fluids на WebGL2, пастельная «краска» на белом фоне
+(function(){
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const cv = document.getElementById("fluid");
+  const gl = cv.getContext("webgl2", {alpha:true, premultipliedAlpha:true, antialias:false, depth:false, stencil:false});
+  if (!gl || !gl.getExtension("EXT_color_buffer_float")) { cv.remove(); return; }
+
+  const SIM = 128, DYE = 512, ITER = 20, CURL = 2, RADIUS = 0.018, FORCE = 3600;
+  const PALETTE = [[.45,.85,1],[.62,.55,1],[.9,.62,.95],[.5,.65,1],[.5,.9,.95]];
+
+  const vs = `#version 300 es
+  in vec2 p; uniform vec2 tx; out vec2 uv,L,R,T,B;
+  void main(){uv=p*.5+.5;L=uv-vec2(tx.x,0.);R=uv+vec2(tx.x,0.);T=uv+vec2(0.,tx.y);B=uv-vec2(0.,tx.y);gl_Position=vec4(p,0.,1.);}`;
+  const head = `#version 300 es
+  precision highp float; in vec2 uv,L,R,T,B; out vec4 o;`;
+  const FS = {
+    splat:   `uniform sampler2D u; uniform float ar,r; uniform vec3 col; uniform vec2 pt;
+              void main(){vec2 d=uv-pt; d.x*=ar; o=texture(u,uv)+vec4(col*exp(-dot(d,d)/r),0.);}`,
+    advect:  `uniform sampler2D v,s; uniform vec2 vt; uniform float dt,k;
+              void main(){vec2 c=uv-dt*texture(v,uv).xy*vt; o=k*texture(s,c);}`,
+    curl:    `uniform sampler2D v;
+              void main(){o=vec4(.5*(texture(v,R).y-texture(v,L).y-texture(v,T).x+texture(v,B).x),0.,0.,1.);}`,
+    vort:    `uniform sampler2D v,c; uniform float s,dt;
+              void main(){float l=texture(c,L).x,r=texture(c,R).x,t=texture(c,T).x,b=texture(c,B).x,C=texture(c,uv).x;
+                vec2 f=.5*vec2(abs(t)-abs(b),abs(r)-abs(l)); f/=length(f)+1e-4; f*=s*C; f.y*=-1.;
+                o=vec4(texture(v,uv).xy+f*dt,0.,1.);}`,
+    div:     `uniform sampler2D v;
+              void main(){float l=texture(v,L).x,r=texture(v,R).x,t=texture(v,T).y,b=texture(v,B).y; vec2 C=texture(v,uv).xy;
+                if(L.x<0.)l=-C.x; if(R.x>1.)r=-C.x; if(T.y>1.)t=-C.y; if(B.y<0.)b=-C.y;
+                o=vec4(.5*(r-l+t-b),0.,0.,1.);}`,
+    scale:   `uniform sampler2D u; uniform float k; void main(){o=k*texture(u,uv);}`,
+    press:   `uniform sampler2D p,d;
+              void main(){o=vec4((texture(p,L).x+texture(p,R).x+texture(p,B).x+texture(p,T).x-texture(d,uv).x)*.25,0.,0.,1.);}`,
+    grad:    `uniform sampler2D p,v;
+              void main(){vec2 g=vec2(texture(p,R).x-texture(p,L).x,texture(p,T).x-texture(p,B).x); o=vec4(texture(v,uv).xy-g,0.,1.);}`,
+    show:    `uniform sampler2D u; uniform vec2 dtx;
+              float A(vec2 p){vec3 c=texture(u,p).rgb; return max(c.r,max(c.g,c.b));}
+              void main(){vec3 c=texture(u,uv).rgb; float a=max(c.r,max(c.g,c.b));
+                vec2 e=dtx*2.5; vec2 g=vec2(A(uv+vec2(e.x,0.))-A(uv-vec2(e.x,0.)),A(uv+vec2(0.,e.y))-A(uv-vec2(0.,e.y)))*7.;
+                float rim=clamp(length(g),0.,1.);
+                float hi=clamp(dot(g,vec2(-.55,.85)),0.,1.);
+                vec3 hue=c/max(a,1e-4);
+                float k=clamp(a*(1.+rim*1.1),0.,.55);
+                k*=1.-hi*.55;
+                o=vec4(hue*k,k);}`
+  };
+
+  function sh(type, src){ const s=gl.createShader(type); gl.shaderSource(s,src); gl.compileShader(s);
+    if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)) throw gl.getShaderInfoLog(s); return s; }
+  const vsh = sh(gl.VERTEX_SHADER, vs);
+  const P = {};
+  for (const k in FS){ const pr=gl.createProgram(); gl.attachShader(pr,vsh); gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,head+FS[k]));
+    gl.bindAttribLocation(pr,0,"p"); gl.linkProgram(pr);
+    const u={}; const n=gl.getProgramParameter(pr,gl.ACTIVE_UNIFORMS);
+    for(let i=0;i<n;i++){const nm=gl.getActiveUniform(pr,i).name; u[nm]=gl.getUniformLocation(pr,nm);}
+    P[k]={pr,u}; }
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+  gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0,2,gl.FLOAT,false,0,0);
+
+  function fbo(w,h){ const t=gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D,t);
+    for (const [a,b] of [[gl.TEXTURE_MIN_FILTER,gl.LINEAR],[gl.TEXTURE_MAG_FILTER,gl.LINEAR],[gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE],[gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE]]) gl.texParameteri(gl.TEXTURE_2D,a,b);
+    gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA16F,w,h,0,gl.RGBA,gl.HALF_FLOAT,null);
+    const f=gl.createFramebuffer(); gl.bindFramebuffer(gl.FRAMEBUFFER,f);
+    gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,t,0);
+    gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT);
+    return {t,f,w,h}; }
+  function dbl(w,h){ let a=fbo(w,h), b=fbo(w,h); return {get r(){return a}, get w(){return b}, swap(){[a,b]=[b,a]}}; }
+  function size(base){ const ar=innerWidth/innerHeight; return ar>1?[Math.round(base*ar),base]:[base,Math.round(base/ar)]; }
+
+  let vel, dye, prs, dvg, crl, sw, sh_, dw, dh;
+  function init(){ [sw,sh_]=size(SIM); [dw,dh]=size(DYE);
+    vel=dbl(sw,sh_); prs=dbl(sw,sh_); dvg=fbo(sw,sh_); crl=fbo(sw,sh_); dye=dbl(dw,dh); }
+  function resize(){ const dpr=Math.min(devicePixelRatio||1,1.5);
+    const w=Math.round(innerWidth*dpr), h=Math.round(innerHeight*dpr);
+    if (cv.width!==w||cv.height!==h){ cv.width=w; cv.height=h; init(); } }
+
+  let tex=0;
+  function use(k, w, h){ const p=P[k]; gl.useProgram(p.pr); if(p.u.tx) gl.uniform2f(p.u.tx,1/w,1/h); tex=0; return p.u; }
+  function bind(loc, t){ gl.activeTexture(gl.TEXTURE0+tex); gl.bindTexture(gl.TEXTURE_2D,t.t); gl.uniform1i(loc,tex++); }
+  function draw(target){ if(target){ gl.viewport(0,0,target.w,target.h); gl.bindFramebuffer(gl.FRAMEBUFFER,target.f); }
+    else { gl.viewport(0,0,cv.width,cv.height); gl.bindFramebuffer(gl.FRAMEBUFFER,null); }
+    gl.drawArrays(gl.TRIANGLE_STRIP,0,4); }
+
+  function splat(x,y,dx,dy,col){ const ar=innerWidth/innerHeight;
+    let u=use("splat",sw,sh_); bind(u.u,vel.r); gl.uniform1f(u.ar,ar); gl.uniform1f(u.r,RADIUS*(ar>1?ar:1));
+    gl.uniform2f(u.pt,x,y); gl.uniform3f(u.col,dx,dy,0); draw(vel.w); vel.swap();
+    u=use("splat",dw,dh); bind(u.u,dye.r); gl.uniform1f(u.ar,ar); gl.uniform1f(u.r,RADIUS*(ar>1?ar:1));
+    gl.uniform2f(u.pt,x,y); gl.uniform3f(u.col,...col); draw(dye.w); dye.swap(); }
+
+  function step(dt){
+    let u=use("curl",sw,sh_); bind(u.v,vel.r); draw(crl);
+    u=use("vort",sw,sh_); bind(u.v,vel.r); bind(u.c,crl); gl.uniform1f(u.s,CURL); gl.uniform1f(u.dt,dt); draw(vel.w); vel.swap();
+    u=use("div",sw,sh_); bind(u.v,vel.r); draw(dvg);
+    u=use("scale",sw,sh_); bind(u.u,prs.r); gl.uniform1f(u.k,.8); draw(prs.w); prs.swap();
+    for(let i=0;i<ITER;i++){ u=use("press",sw,sh_); bind(u.p,prs.r); bind(u.d,dvg); draw(prs.w); prs.swap(); }
+    u=use("grad",sw,sh_); bind(u.p,prs.r); bind(u.v,vel.r); draw(vel.w); vel.swap();
+    u=use("advect",sw,sh_); bind(u.v,vel.r); bind(u.s,vel.r); gl.uniform2f(u.vt,1/sw,1/sh_); gl.uniform1f(u.dt,dt); gl.uniform1f(u.k,.975); draw(vel.w); vel.swap();
+    u=use("advect",dw,dh); bind(u.v,vel.r); bind(u.s,dye.r); gl.uniform2f(u.vt,1/sw,1/sh_); gl.uniform1f(u.dt,dt); gl.uniform1f(u.k,.993); draw(dye.w); dye.swap();
+  }
+  function render(){ const u=use("show",dw,dh); bind(u.u,dye.r); gl.uniform2f(u.dtx,1/dw,1/dh); draw(null); }
+
+  // цвет плавно гуляет по палитре
+  let hue=Math.random()*PALETTE.length;
+  function color(k){ hue=(hue+.025)%PALETTE.length; const i=Math.floor(hue), f=hue-i, a=PALETTE[i], b=PALETTE[(i+1)%PALETTE.length];
+    return a.map((v,j)=>(v+(b[j]-v)*f)*k); }
+
+  let px=null, py=null, active=performance.now();
+  function move(cx,cy){ const x=cx/innerWidth, y=1-cy/innerHeight;
+    if(px!==null){ const dx=x-px, dy=y-py; if(Math.abs(dx)+Math.abs(dy)>1e-4){ splat(x,y,dx*FORCE*(innerWidth/innerHeight),dy*FORCE,color(.05)); } }
+    px=x; py=y; active=performance.now(); }
+  addEventListener("mousemove",e=>move(e.clientX,e.clientY),{passive:true});
+  addEventListener("touchmove",e=>{const t=e.touches[0]; move(t.clientX,t.clientY)},{passive:true});
+  addEventListener("touchend",()=>{px=py=null},{passive:true});
+  document.addEventListener("mouseleave",()=>{px=py=null});
+  addEventListener("resize",resize);
+
+  resize();
+  // стартовые мазки, чтобы первый экран не был пустым
+  [[.72,.62,-.9,.6],[.3,.35,.8,.5],[.85,.3,-.4,-.9]].forEach(([x,y,dx,dy])=>{
+    for(let i=0;i<10;i++) splat(x+dx*i*.02,y+dy*i*.02,dx*500,dy*500,color(.035)); });
+
+  let last=performance.now(), gx=null, gy=null;
+  (function loop(now){ const dt=Math.min((now-last)/1000,1/30); last=now;
+    if (now-active>1500) { // мышь стоит: призрачный курсор рисует медленную волну
+      const t=now/1000, x=.5+.38*Math.sin(t*.23)*Math.cos(t*.11), y=.5+.32*Math.sin(t*.17+1.3);
+      if (gx!==null) splat(x,y,(x-gx)*FORCE*.9*(innerWidth/innerHeight),(y-gy)*FORCE*.9,color(.018));
+      gx=x; gy=y;
+    } else gx=null;
+    step(dt); render();
+    requestAnimationFrame(loop); })(last);
+})();
+</script>
+</body>
+</html>
