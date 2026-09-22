@@ -306,7 +306,6 @@ dialog::backdrop{background:rgba(20,24,50,.35);backdrop-filter:blur(6px)}
 
 /* появление */
 .rv{opacity:0;transform:translateY(40px) scale(.98);transition:opacity .9s ease,transform 1s cubic-bezier(.2,.7,.2,1)}
-.rv.above{transform:translateY(-40px) scale(.98)}
 .rv.in{opacity:1;transform:none}
 
 /* мобилка */
@@ -628,7 +627,7 @@ document.getElementById("burger").onclick=()=>menu.classList.toggle("open");
 menu.querySelectorAll("a").forEach(a=>a.onclick=()=>menu.classList.remove("open"));
 
 // появление блоков: проверка на scroll, без IntersectionObserver (быстрая прокрутка и якоря не оставляют блоки невидимыми)
-// появление блоков в обе стороны: снизу при прокрутке вниз, сверху при прокрутке вверх; соседи в сетке — по очереди
+// появление блоков один раз при прокрутке вниз; соседи в сетке — по очереди
 const rvs=[...document.querySelectorAll(".rv")];
 rvs.forEach(el=>{const sib=[...el.parentElement.children].filter(c=>c.classList.contains("rv")); el._i=Math.min(sib.indexOf(el),6);});
 function countUp(el){const b=el.querySelector("b"); if(!b) return; const full=b.dataset.v||(b.dataset.v=b.textContent); const m=full.match(/^(\d+)(.*)$/); if(!m) return;
@@ -636,8 +635,8 @@ function countUp(el){const b=el.querySelector("b"); if(!b) return; const full=b.
   (function f(now){const k=Math.min((now-t0)/T,1), e=1-Math.pow(1-k,3); b.textContent=Math.round(to*e)+rest; if(k<1) b._r=requestAnimationFrame(f);})(t0);}
 function reveal(){const h=innerHeight;for(const el of rvs){ if(el.offsetParent===null&&!el.matches("dialog *")) continue;
   const r=el.getBoundingClientRect(), vis=r.top<h*0.92&&r.bottom>h*0.06;
-  if(vis&&!el.classList.contains("in")){ el.style.transitionDelay=(el._i*.09)+"s"; el.classList.remove("above"); el.classList.add("in"); if(el.classList.contains("stat")) countUp(el); }
-  else if(!vis&&el.classList.contains("in")&&(r.bottom<-40||r.top>h+40)){ el.style.transitionDelay="0s"; el.classList.remove("in"); el.classList.toggle("above",r.bottom<0); } }}
+  if(vis&&!el.classList.contains("in")){ el.style.transitionDelay=(el._i*.09)+"s"; el.classList.add("in"); if(el.classList.contains("stat")) countUp(el); }
+  }}
 let tick=false;addEventListener("scroll",()=>{if(!tick){tick=true;requestAnimationFrame(()=>{reveal();tick=false})}},{passive:true});
 addEventListener("resize",reveal);addEventListener("hashchange",()=>setTimeout(reveal,50));reveal();
 </script>
