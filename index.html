@@ -59,18 +59,23 @@ header .btn{height:62px;padding:0 40px;font-size:16px}
 .head-right{display:flex;gap:16px;align-items:center;margin-left:auto}
 
 .dd{position:static}
+/* пустые места шапки пропускают мышь к стеклу меню — иначе при движении по диагонали меню закрывается */
+.nav,.menu,.head-right{pointer-events:none}
+.nav a,.nav button,.dd{pointer-events:auto}
 .dd-t{position:relative;padding:36px 0}
 .dd:hover .dd-t,.dd:focus-within .dd-t{color:var(--blue)}
 .dd:hover .dd-t::after,.dd:focus-within .dd-t::after{content:"";position:absolute;left:0;right:0;bottom:26px;height:2px;border-radius:2px;background:linear-gradient(100deg,#5fd0f5,#8f9dff 40%,#5cc0f2 65%,#b58cff)}
-.mega{position:absolute;left:0;right:0;top:96px;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .25s,transform .25s,visibility .25s;
-  background:linear-gradient(rgba(255,255,255,.42),rgba(255,255,255,.22));backdrop-filter:blur(36px) saturate(2);-webkit-backdrop-filter:blur(36px) saturate(2);box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 30px 60px rgba(60,70,160,.12);border-bottom:1px solid rgba(255,255,255,.7)}
-.dd:hover .mega,.dd:focus-within .mega{opacity:1;visibility:visible;transform:none}
-.mega-in{display:grid;grid-template-columns:repeat(4,max-content);gap:70px;padding-top:30px;padding-bottom:40px;justify-content:center}
+.mega{position:absolute;left:0;right:0;top:0;z-index:-1;padding-top:96px;opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s;
+  background:linear-gradient(rgba(255,255,255,.62),rgba(255,255,255,.4) 60%,rgba(255,255,255,0));backdrop-filter:blur(36px) saturate(2);-webkit-backdrop-filter:blur(36px) saturate(2);-webkit-mask-image:linear-gradient(#000 62%,transparent);mask-image:linear-gradient(#000 62%,transparent)}
+.dd:hover .mega,.dd:focus-within .mega{opacity:1;visibility:visible}
+header::before{transition:opacity .35s}
+header:has(.dd:not(.sm):hover)::before,header:has(.dd:not(.sm):focus-within)::before{opacity:0}
+.mega-in{display:grid;grid-template-columns:repeat(4,max-content);gap:70px;padding-top:24px;padding-bottom:150px;justify-content:center}
 .mega b{display:block;color:var(--blue);font-weight:500;font-size:15px;margin-bottom:14px}
 .mega a{display:block;font-size:14px;color:#1b1d27;padding:5px 0}
 .mega a:hover{color:var(--blue)}
 .dd.sm{position:relative}
-.dd.sm .mega{left:-28px;right:auto;top:100%;width:max-content;border-radius:0 0 22px 22px;border:1px solid rgba(255,255,255,.7);border-top:0}
+.dd.sm .mega{left:-28px;right:auto;top:calc(100% - 4px);z-index:auto;padding-top:0;width:max-content;border-radius:22px;background:rgba(255,255,255,.5);-webkit-mask-image:none;mask-image:none;box-shadow:0 20px 50px rgba(60,70,160,.1)}
 .dd.sm .mega-in{display:block;padding:22px 28px 26px}
 .dd.sm .mega a{font-size:15px;padding:7px 0}
 .sol[id]{scroll-margin-top:130px}
