@@ -101,8 +101,17 @@ header:has(.dd:not(.sm):hover)::before,header:has(.dd:not(.sm):focus-within)::be
 .calc-link{margin-top:22px;font-size:16px;color:var(--muted);border-bottom:1px dashed rgba(107,111,128,.5)}
 .calc-link:hover{color:var(--ink)}
 .win-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:70px}
-.win h3{font-size:30px;font-weight:500;margin:28px 0 14px}
+.win{perspective:1200px;min-height:340px;outline:none}
+.win-in{position:relative;height:100%;min-height:340px;transition:transform .7s cubic-bezier(.2,.7,.2,1);transform-style:preserve-3d}
+.win:hover .win-in,.win:focus .win-in{transform:rotateY(180deg)}
+.win-f,.win-b{position:absolute;inset:0;border-radius:var(--r);padding:30px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;text-align:center}
+.win-f{background:linear-gradient(160deg,rgba(214,232,252,.95),rgba(232,242,253,.9));box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 2px 6px rgba(40,70,150,.05)}
+.win-f svg:first-child{width:130px;height:130px;margin-top:10px;transition:transform .5s}
+.win-b{transform:rotateY(180deg);background:linear-gradient(160deg,rgba(255,255,255,.72),rgba(240,246,255,.6));backdrop-filter:blur(24px) saturate(1.6);-webkit-backdrop-filter:blur(24px) saturate(1.6);box-shadow:inset 0 1px 0 #fff,inset 0 0 0 1px rgba(255,255,255,.8),0 20px 40px rgba(50,90,180,.12);justify-content:center;text-align:left;align-items:flex-start}
+.win h3{font-size:28px;font-weight:500;margin:22px 0 0;line-height:1.15}
+.win-b h3{margin:0 0 14px}
 .win p{font-size:17px;line-height:1.55;color:#2a2c38}
+.flip-ic{width:24px;height:24px;margin-top:auto;color:var(--blue)}
 .calc{margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:50px;padding:48px}
 .calc h3{font-size:32px;font-weight:500;margin-bottom:30px}
 .calc label{display:block;font-size:17px;margin-bottom:28px;color:#2a2c38}
@@ -115,8 +124,7 @@ header:has(.dd:not(.sm):hover)::before,header:has(.dd:not(.sm):focus-within)::be
 .note{grid-column:1/-1;font-size:14px;line-height:1.5;color:var(--muted)}
 .calc-out .btn{grid-column:1/-1;justify-self:start}
 
-.win,.calc{border-radius:var(--r);background:linear-gradient(160deg,rgba(221,233,250,.9),rgba(235,242,252,.86));backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 2px 6px rgba(40,70,150,.05)}
-.win{padding:30px}
+.calc{border-radius:var(--r);background:linear-gradient(160deg,rgba(221,233,250,.9),rgba(235,242,252,.86));backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 2px 6px rgba(40,70,150,.05)}
 
 /* внутренние страницы: демо-чат, площадки, карточки-ссылки */
 a.sol{color:inherit}
@@ -341,6 +349,8 @@ dialog::backdrop{background:rgba(20,24,50,.35);backdrop-filter:blur(6px)}
   .dphone{width:290px;height:560px}
   .places span{padding:14px 22px;font-size:16px}
   .win-grid{grid-template-columns:1fr}
+  .win,.win-in{min-height:270px}
+  .win-f svg:first-child{width:110px;height:110px}
   .calc{padding:26px 20px}
   .calc-out{grid-template-columns:1fr}
   .calc-out .btn{justify-self:stretch;white-space:normal;text-align:center;height:auto;padding:16px 20px}
@@ -402,9 +412,11 @@ iphone-16-max .dtop{padding-top:58px}
           <div><b>Консалтинг</b><a href="biznes.html#strat">Стратсессия по&nbsp;ИИ</a><a href="biznes.html#training">Обучение команды</a></div>
         </div></div>
       </div>
-      <div class="dd sm"><a href="chatboty.html" class="dd-t">ИИ-чат-боты</a>
-        <div class="mega"><div class="mega-in">
-          <div><a href="chatboty.html#b-clinic">Для клиник</a><a href="chatboty.html#b-beauty">Для салонов красоты</a><a href="chatboty.html#b-school">Для онлайн-школ</a><a href="chatboty.html#b-food">Для ресторанов</a><a href="chatboty.html#b-realty">Для недвижимости и&nbsp;УК</a><a href="chatboty.html#b-law">Для юристов</a><a href="chatboty.html#b-hr">Для управления кадрами</a></div>
+      <div class="dd"><a href="chatboty.html" class="dd-t">ИИ-чат-боты</a>
+        <div class="mega"><div class="wrap mega-in">
+          <div><b>По сферам</b><a href="chatboty.html#b-clinic">Для клиник</a><a href="chatboty.html#b-beauty">Для салонов красоты</a><a href="chatboty.html#b-school">Для онлайн-школ</a><a href="chatboty.html#b-food">Для ресторанов</a><a href="chatboty.html#b-realty">Для недвижимости и&nbsp;УК</a><a href="chatboty.html#b-law">Для юристов</a><a href="chatboty.html#b-hr">Для управления кадрами</a></div>
+          <div><b>Что умеет бот</b><a href="chatboty.html#s-kb">Отвечает по&nbsp;базе знаний</a><a href="chatboty.html#s-book">Записывает и&nbsp;бронирует</a><a href="chatboty.html#s-pay">Принимает оплату</a><a href="chatboty.html#s-crm">Заносит заявки в&nbsp;CRM</a><a href="chatboty.html#s-human">Передаёт человеку</a></div>
+          <div><b>Где работает</b><a href="chatboty.html#where">Telegram</a><a href="chatboty.html#where">WhatsApp</a><a href="chatboty.html#where">ВКонтакте и&nbsp;Max</a><a href="chatboty.html#where">Виджет на&nbsp;сайте</a><a href="chatboty.html#demo">Посмотреть демо</a></div>
         </div></div>
       </div>
       <a href="./#cases">Кейсы</a>
@@ -745,10 +757,10 @@ addEventListener("resize",reveal);addEventListener("hashchange",()=>setTimeout(r
   let last=performance.now();
   (function loop(now){ const dt=Math.min((now-last)/1000,1/30); last=now;
     const idle=now-active;
-    fade = idle>700 ? .94 : .993;
-    if (idle<3500) { step(dt); render(); }
+    fade = idle>1000 ? .978 : .993;
+    if (idle<7000) { step(dt); render(); }
     else if (!cleared) { gl.bindFramebuffer(gl.FRAMEBUFFER,null); gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT); [dye.r,dye.w].forEach(t=>{gl.bindFramebuffer(gl.FRAMEBUFFER,t.f); gl.clear(gl.COLOR_BUFFER_BIT);}); cleared=true; }
-    if (idle<3500) cleared=false;
+    if (idle<7000) cleared=false;
     requestAnimationFrame(loop); })(last);
 })();
 </script>

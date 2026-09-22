@@ -101,8 +101,17 @@ header:has(.dd:not(.sm):hover)::before,header:has(.dd:not(.sm):focus-within)::be
 .calc-link{margin-top:22px;font-size:16px;color:var(--muted);border-bottom:1px dashed rgba(107,111,128,.5)}
 .calc-link:hover{color:var(--ink)}
 .win-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:70px}
-.win h3{font-size:30px;font-weight:500;margin:28px 0 14px}
+.win{perspective:1200px;min-height:340px;outline:none}
+.win-in{position:relative;height:100%;min-height:340px;transition:transform .7s cubic-bezier(.2,.7,.2,1);transform-style:preserve-3d}
+.win:hover .win-in,.win:focus .win-in{transform:rotateY(180deg)}
+.win-f,.win-b{position:absolute;inset:0;border-radius:var(--r);padding:30px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;text-align:center}
+.win-f{background:linear-gradient(160deg,rgba(214,232,252,.95),rgba(232,242,253,.9));box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 2px 6px rgba(40,70,150,.05)}
+.win-f svg:first-child{width:130px;height:130px;margin-top:10px;transition:transform .5s}
+.win-b{transform:rotateY(180deg);background:linear-gradient(160deg,rgba(255,255,255,.72),rgba(240,246,255,.6));backdrop-filter:blur(24px) saturate(1.6);-webkit-backdrop-filter:blur(24px) saturate(1.6);box-shadow:inset 0 1px 0 #fff,inset 0 0 0 1px rgba(255,255,255,.8),0 20px 40px rgba(50,90,180,.12);justify-content:center;text-align:left;align-items:flex-start}
+.win h3{font-size:28px;font-weight:500;margin:22px 0 0;line-height:1.15}
+.win-b h3{margin:0 0 14px}
 .win p{font-size:17px;line-height:1.55;color:#2a2c38}
+.flip-ic{width:24px;height:24px;margin-top:auto;color:var(--blue)}
 .calc{margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:50px;padding:48px}
 .calc h3{font-size:32px;font-weight:500;margin-bottom:30px}
 .calc label{display:block;font-size:17px;margin-bottom:28px;color:#2a2c38}
@@ -115,8 +124,7 @@ header:has(.dd:not(.sm):hover)::before,header:has(.dd:not(.sm):focus-within)::be
 .note{grid-column:1/-1;font-size:14px;line-height:1.5;color:var(--muted)}
 .calc-out .btn{grid-column:1/-1;justify-self:start}
 
-.win,.calc{border-radius:var(--r);background:linear-gradient(160deg,rgba(221,233,250,.9),rgba(235,242,252,.86));backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 2px 6px rgba(40,70,150,.05)}
-.win{padding:30px}
+.calc{border-radius:var(--r);background:linear-gradient(160deg,rgba(221,233,250,.9),rgba(235,242,252,.86));backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 2px 6px rgba(40,70,150,.05)}
 
 /* внутренние страницы: демо-чат, площадки, карточки-ссылки */
 a.sol{color:inherit}
@@ -341,6 +349,8 @@ dialog::backdrop{background:rgba(20,24,50,.35);backdrop-filter:blur(6px)}
   .dphone{width:290px;height:560px}
   .places span{padding:14px 22px;font-size:16px}
   .win-grid{grid-template-columns:1fr}
+  .win,.win-in{min-height:270px}
+  .win-f svg:first-child{width:110px;height:110px}
   .calc{padding:26px 20px}
   .calc-out{grid-template-columns:1fr}
   .calc-out .btn{justify-self:stretch;white-space:normal;text-align:center;height:auto;padding:16px 20px}
@@ -402,9 +412,11 @@ iphone-16-max .dtop{padding-top:58px}
           <div><b>Консалтинг</b><a href="biznes.html#strat">Стратсессия по&nbsp;ИИ</a><a href="biznes.html#training">Обучение команды</a></div>
         </div></div>
       </div>
-      <div class="dd sm"><a href="chatboty.html" class="dd-t">ИИ-чат-боты</a>
-        <div class="mega"><div class="mega-in">
-          <div><a href="chatboty.html#b-clinic">Для клиник</a><a href="chatboty.html#b-beauty">Для салонов красоты</a><a href="chatboty.html#b-school">Для онлайн-школ</a><a href="chatboty.html#b-food">Для ресторанов</a><a href="chatboty.html#b-realty">Для недвижимости и&nbsp;УК</a><a href="chatboty.html#b-law">Для юристов</a><a href="chatboty.html#b-hr">Для управления кадрами</a></div>
+      <div class="dd"><a href="chatboty.html" class="dd-t">ИИ-чат-боты</a>
+        <div class="mega"><div class="wrap mega-in">
+          <div><b>По сферам</b><a href="chatboty.html#b-clinic">Для клиник</a><a href="chatboty.html#b-beauty">Для салонов красоты</a><a href="chatboty.html#b-school">Для онлайн-школ</a><a href="chatboty.html#b-food">Для ресторанов</a><a href="chatboty.html#b-realty">Для недвижимости и&nbsp;УК</a><a href="chatboty.html#b-law">Для юристов</a><a href="chatboty.html#b-hr">Для управления кадрами</a></div>
+          <div><b>Что умеет бот</b><a href="chatboty.html#s-kb">Отвечает по&nbsp;базе знаний</a><a href="chatboty.html#s-book">Записывает и&nbsp;бронирует</a><a href="chatboty.html#s-pay">Принимает оплату</a><a href="chatboty.html#s-crm">Заносит заявки в&nbsp;CRM</a><a href="chatboty.html#s-human">Передаёт человеку</a></div>
+          <div><b>Где работает</b><a href="chatboty.html#where">Telegram</a><a href="chatboty.html#where">WhatsApp</a><a href="chatboty.html#where">ВКонтакте и&nbsp;Max</a><a href="chatboty.html#where">Виджет на&nbsp;сайте</a><a href="chatboty.html#demo">Посмотреть демо</a></div>
         </div></div>
       </div>
       <a href="#cases">Кейсы</a>
@@ -430,10 +442,19 @@ iphone-16-max .dtop{padding-top:58px}
     <h2 class="h2 center rv">Что покажем за&nbsp;30 минут</h2>
     <p class="lead center rv">Разбираем ваш бизнес и&nbsp;находим, где ИИ даст результат.</p>
     <div class="win-grid">
-      <div class="win rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 12h.01M18 12h.01"/></svg></div><h3>Деньги</h3><p>Сколько вы тратите на&nbsp;ручную работу и&nbsp;сколько сэкономите в&nbsp;месяц после внедрения.</p></div>
-      <div class="win rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></svg></div><h3>Сотрудники</h3><p>Кто в&nbsp;команде тонет в&nbsp;рутине и&nbsp;сколько часов ИИ вернёт каждому на&nbsp;важную работу.</p></div>
-      <div class="win rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><path d="M10 6.5h4a3 3 0 0 1 3 3V14"/></svg></div><h3>Процессы</h3><p>Какие процессы отдать ИИ первыми, чтобы быстро увидеть результат, а&nbsp;какие пока не&nbsp;трогать.</p></div>
-      <div class="win rv"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>Время</h3><p>Как ответы клиентам, отчёты и&nbsp;заявки начнут делаться за&nbsp;секунды, а&nbsp;не&nbsp;за&nbsp;часы.</p></div>
+      <div class="win rv" tabindex="0"><div class="win-in"><div class="win-f"><svg viewBox="0 0 120 120"><defs><linearGradient id="g0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fd8ff"/><stop offset=".55" stop-color="#3fb0ff"/><stop offset="1" stop-color="#1f7fe8"/></linearGradient>
+<linearGradient id="h0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<filter id="f0" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#1f6fd8" flood-opacity=".28"/></filter></defs><g filter="url(#f0)"><rect x="14" y="38" width="72" height="44" rx="10" fill="url(#g0)" transform="rotate(-10 50 60)"/><rect x="22" y="46" width="72" height="44" rx="10" fill="url(#g0)"/><circle cx="58" cy="68" r="11" fill="#fff" opacity=".85"/><rect x="26" y="49" width="64" height="12" rx="6" fill="url(#h0)"/>
+<ellipse cx="94" cy="92" rx="16" ry="6" fill="#1f7fe8"/><rect x="78" y="80" width="32" height="12" fill="url(#g0)"/><ellipse cx="94" cy="80" rx="16" ry="6" fill="#9fe0ff"/><ellipse cx="94" cy="72" rx="16" ry="6" fill="#1f7fe8"/><rect x="78" y="60" width="32" height="12" fill="url(#g0)"/><ellipse cx="94" cy="60" rx="16" ry="6" fill="#bfeaff"/></g></svg><h3>Деньги</h3><svg class="flip-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 0 0-14.3-4.9L4 8M4 4v4h4M4 13a8 8 0 0 0 14.3 4.9L20 16M20 20v-4h-4"/></svg></div><div class="win-b"><h3>Деньги</h3><p>Сколько вы тратите на&nbsp;ручную работу и&nbsp;сколько сэкономите в&nbsp;месяц после внедрения.</p></div></div></div>
+      <div class="win rv" tabindex="0"><div class="win-in"><div class="win-f"><svg viewBox="0 0 120 120"><defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fd8ff"/><stop offset=".55" stop-color="#3fb0ff"/><stop offset="1" stop-color="#1f7fe8"/></linearGradient>
+<linearGradient id="h1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<filter id="f1" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#1f6fd8" flood-opacity=".28"/></filter></defs><g filter="url(#f1)"><circle cx="84" cy="40" r="14" fill="url(#g1)" opacity=".75"/><path d="M60 96a24 24 0 0 1 48 0z" fill="url(#g1)" opacity=".75"/><circle cx="50" cy="42" r="19" fill="url(#g1)"/><path d="M16 102a34 34 0 0 1 68 0z" fill="url(#g1)"/><ellipse cx="45" cy="34" rx="10" ry="6" fill="url(#h1)"/><path d="M26 92a24 20 0 0 1 32-14" stroke="#fff" stroke-opacity=".5" stroke-width="5" fill="none" stroke-linecap="round"/></g></svg><h3>Сотрудники</h3><svg class="flip-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 0 0-14.3-4.9L4 8M4 4v4h4M4 13a8 8 0 0 0 14.3 4.9L20 16M20 20v-4h-4"/></svg></div><div class="win-b"><h3>Сотрудники</h3><p>Кто в&nbsp;команде тонет в&nbsp;рутине и&nbsp;сколько часов ИИ вернёт каждому на&nbsp;важную работу.</p></div></div></div>
+      <div class="win rv" tabindex="0"><div class="win-in"><div class="win-f"><svg viewBox="0 0 120 120"><defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fd8ff"/><stop offset=".55" stop-color="#3fb0ff"/><stop offset="1" stop-color="#1f7fe8"/></linearGradient>
+<linearGradient id="h2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<filter id="f2" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#1f6fd8" flood-opacity=".28"/></filter></defs><g filter="url(#f2)"><path d="M44 36h24a14 14 0 0 1 14 14v18" stroke="url(#g2)" stroke-width="9" fill="none" stroke-linecap="round"/><path d="M71 62l11 12 11-12" stroke="url(#g2)" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="12" y="18" width="36" height="36" rx="11" fill="url(#g2)"/><rect x="16" y="21" width="28" height="12" rx="6" fill="url(#h2)"/><rect x="66" y="74" width="40" height="36" rx="11" fill="url(#g2)"/><rect x="70" y="77" width="32" height="12" rx="6" fill="url(#h2)"/></g></svg><h3>Процессы</h3><svg class="flip-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 0 0-14.3-4.9L4 8M4 4v4h4M4 13a8 8 0 0 0 14.3 4.9L20 16M20 20v-4h-4"/></svg></div><div class="win-b"><h3>Процессы</h3><p>Какие процессы отдать ИИ первыми, чтобы быстро увидеть результат, а&nbsp;какие пока не&nbsp;трогать.</p></div></div></div>
+      <div class="win rv" tabindex="0"><div class="win-in"><div class="win-f"><svg viewBox="0 0 120 120"><defs><linearGradient id="g3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fd8ff"/><stop offset=".55" stop-color="#3fb0ff"/><stop offset="1" stop-color="#1f7fe8"/></linearGradient>
+<linearGradient id="h3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<filter id="f3" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#1f6fd8" flood-opacity=".28"/></filter></defs><g filter="url(#f3)"><circle cx="60" cy="62" r="44" fill="url(#g3)"/><circle cx="60" cy="62" r="33" fill="#eaf7ff"/><path d="M60 40v24l15 10" stroke="#1f7fe8" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="60" cy="64" r="5" fill="#1f7fe8"/><ellipse cx="50" cy="30" rx="22" ry="8" fill="url(#h3)"/></g></svg><h3>Время</h3><svg class="flip-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 0 0-14.3-4.9L4 8M4 4v4h4M4 13a8 8 0 0 0 14.3 4.9L20 16M20 20v-4h-4"/></svg></div><div class="win-b"><h3>Время</h3><p>Как ответы клиентам, отчёты и&nbsp;заявки начнут делаться за&nbsp;секунды, а&nbsp;не&nbsp;за&nbsp;часы.</p></div></div></div>
     </div>
 
     <div class="calc rv">
@@ -911,10 +932,10 @@ addEventListener("resize",reveal);addEventListener("hashchange",()=>setTimeout(r
   let last=performance.now();
   (function loop(now){ const dt=Math.min((now-last)/1000,1/30); last=now;
     const idle=now-active;
-    fade = idle>700 ? .94 : .993;
-    if (idle<3500) { step(dt); render(); }
+    fade = idle>1000 ? .978 : .993;
+    if (idle<7000) { step(dt); render(); }
     else if (!cleared) { gl.bindFramebuffer(gl.FRAMEBUFFER,null); gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT); [dye.r,dye.w].forEach(t=>{gl.bindFramebuffer(gl.FRAMEBUFFER,t.f); gl.clear(gl.COLOR_BUFFER_BIT);}); cleared=true; }
-    if (idle<3500) cleared=false;
+    if (idle<7000) cleared=false;
     requestAnimationFrame(loop); })(last);
 })();
 </script>
