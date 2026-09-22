@@ -72,6 +72,9 @@ header .btn{height:62px;padding:0 40px;font-size:16px}
 .dd:hover .mega,.dd:focus-within .mega{opacity:1;visibility:visible}
 header::before{transition:opacity .35s}
 header:has(.dd:not(.sm):hover)::before,header:has(.dd:not(.sm):focus-within)::before{opacity:0}
+/* при открытом меню страница под ним гасится, иначе заголовок просвечивает сквозь стекло */
+header::after{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:0;transition:opacity .35s;background:rgba(255,255,255,.82);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+header:has(.dd:hover)::after,header:has(.dd:focus-within)::after{opacity:1}
 .mega-in{display:grid;grid-template-columns:repeat(4,max-content);gap:70px;padding-top:24px;padding-bottom:150px;justify-content:center}
 .mega b{display:block;color:var(--blue);font-weight:500;font-size:15px;margin-bottom:14px}
 .mega a{display:block;font-size:14px;color:#1b1d27;padding:5px 0}
