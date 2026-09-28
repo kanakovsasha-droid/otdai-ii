@@ -629,6 +629,9 @@ document.getElementById("burger").onclick=()=>menu.classList.toggle("open");
 menu.querySelectorAll("a").forEach(a=>a.onclick=()=>menu.classList.remove("open"));
 
 // появление блоков: проверка на scroll, без IntersectionObserver (быстрая прокрутка и якоря не оставляют блоки невидимыми)
+// ?to=cases — сразу к разделу. Нужен для Mini App бота: Telegram занимает #hash своими данными.
+(function(){ const to=new URLSearchParams(location.search).get("to"); const el=to&&/^[\w-]+$/.test(to)&&document.getElementById(to);
+  if(el){ document.documentElement.style.scrollBehavior="auto"; const go=()=>el.scrollIntoView(); go(); addEventListener("load",()=>{go();setTimeout(go,300);}); } })();
 // появление блоков один раз при прокрутке вниз; соседи в сетке — по очереди
 const rvs=[...document.querySelectorAll(".rv")];
 rvs.forEach(el=>{const sib=[...el.parentElement.children].filter(c=>c.classList.contains("rv")); el._i=Math.min(sib.indexOf(el),6);});
