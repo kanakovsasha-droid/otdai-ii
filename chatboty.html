@@ -201,6 +201,21 @@ a.sol{color:inherit}
 .tag{z-index:3;position:absolute;top:24px;left:24px;padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.95);box-shadow:0 4px 14px rgba(40,60,140,.1);font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--blue)}
 
 /* мокапы */
+.film .frame::after{display:none}
+.play{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 8px 24px rgba(0,0,0,.25);position:relative}
+.play::before{content:"";position:absolute;left:26px;top:20px;border-left:18px solid #0b0b12;border-top:12px solid transparent;border-bottom:12px solid transparent}
+.shot{background:#f7f8fc;border-radius:8px;aspect-ratio:16/10;overflow:hidden}
+.shot img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.scr-shot{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.dlg-video{display:block;width:100%;margin:26px 0 8px;border-radius:20px;background:#0b0b12;box-shadow:0 18px 40px rgba(30,40,110,.18)}
+.dlg-cap{font-size:14px;color:var(--muted);margin:0 0 6px}
+.sched{padding:10px;display:grid;gap:7px}
+.les{display:grid;grid-template-columns:34px 1fr;gap:6px;align-items:start;background:#fff;border-radius:11px;padding:8px;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.les b{font-size:10.5px;padding-top:1px}
+.les span{position:relative;padding-left:9px;font-weight:600;font-size:10.5px;line-height:1.3}
+.les span i{position:absolute;left:0;top:1px;bottom:1px;width:3px;border-radius:2px}
+.les small{display:block;font-weight:400;color:#777;font-size:9.5px}
+.les.now{box-shadow:0 0 0 1.5px #22b573}
 .phone{width:210px;height:430px;border-radius:38px;background:#12131a;padding:9px;box-shadow:0 30px 60px rgba(30,40,110,.25),inset 0 0 0 2px #2a2c38;transform:rotate(-6deg)}
 .phone.r{transform:rotate(5deg)}
 .scr{width:100%;height:100%;border-radius:30px;background:#f6f7fb;overflow:hidden;position:relative;font-size:10.5px;line-height:1.35}
@@ -306,7 +321,10 @@ dialog::backdrop{background:rgba(20,24,50,.35);backdrop-filter:blur(6px)}
 .dlg h4{font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:24px 0 8px;font-weight:600}
 .dlg p,.dlg li{font-size:18px;line-height:1.6;color:#23252f}
 .dlg ul{padding-left:20px}
-.dlg .stack{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.dlg .links{display:flex;flex-wrap:wrap;gap:10px;margin:-10px 0 6px}
+.dlg .links .btn{height:48px;padding:0 22px;font-size:13.5px}
+.dlg .links svg{width:16px;height:16px}
+.dlg .stack{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
 .dlg .stack span{padding:6px 14px;border-radius:999px;background:#eef3fc;font-size:14px}
 
 /* появление */
@@ -583,12 +601,15 @@ const CASES={
     task:"Студентам нужно готовиться к парам и зачётам, а преподавателям — видеть, кто реально занимается. Заказчик хотел продукт внутри Telegram, без установки приложений.",
     sol:["Telegram Mini App и бот с ИИ-ядром: объясняет темы, генерирует задания и проверяет ответы","Игровые механики: опыт, серии дней, рейтинг группы","Задания на аудирование с озвучкой","Админка для кураторов и подписка FREE / PRO"],
     res:"От ТЗ до прода за 17 дней. Пилот запущен на первом курсе, дальше доработки по фидбеку студентов.",
-    stack:["LLM","Telegram Mini App","Node.js","PostgreSQL","Docker"]},
+    stack:["LLM","Telegram Mini App","Node.js","PostgreSQL","Docker"],
+    links:[["Открыть бота","https://t.me/unimate_aibot"]]},
   domiro:{k:"SaaS-платформа · веб + iOS + Android",t:"Платформа для жилых комплексов с ИИ-агентом",
     task:"Застройщикам и управляющим компаниям нужен единый сервис: заявки жителей, платежи, документы, пропуска. Плюс ответы на типовые вопросы без нагрузки на диспетчера.",
     sol:["Веб-кабинеты для платформы, партнёров, застройщиков и УК со строгим разделением доступа","Приложение жителя на iOS и Android","ИИ-агент, который отвечает жителям по базе конкретного ЖК","Пуш-уведомления, чат по заявке с фото, импорт жителей из CSV"],
-    res:"Платформа работает на проде, готовится к запуску в Узбекистане и Саудовской Аравии.",
-    stack:["Next.js","Prisma","PostgreSQL","SwiftUI","Kotlin","LLM"]},
+    res:"Платформа работает на проде, приложения жителя опубликованы в App Store и Google Play. Готовится запуск в Узбекистане и Саудовской Аравии.",
+    stack:["Next.js","Prisma","PostgreSQL","SwiftUI","Kotlin","LLM"],
+    videos:[{src:"media/domiro-promo.mp4",poster:"img/domiro-video-cover.webp"}],
+    links:[["Сайт платформы","https://domiro.app"],["App Store","https://apps.apple.com/app/id6813030909"],["Google Play","https://play.google.com/store/apps/details?id=com.domiro.myapp"]]},
   finance:{k:"Автоматизация · Telegram-бот",t:"Бот вместо Google-таблицы расходов",
     task:"Раз в месяц пять сотрудников вносили цифры в общую Google-таблицу. Формулы ломались, копейки терялись из-за формата ячеек, сводку ждали неделями.",
     sol:["Бот сам спрашивает у каждого только его цифры и проверяет формат","Считает производные показатели с точностью до копейки","Напоминает 5-го и 9-го числа, дедлайн сдачи — 10-е","Отдаёт владельцу сводку текстом и Excel с живыми формулами"],
@@ -597,26 +618,48 @@ const CASES={
   planiro:{k:"Мобильное приложение · компьютерное зрение",t:"Распознавание еды по фото",
     task:"В трекере питания пользователи бросают дневник, потому что вбивать каждый продукт вручную долго.",
     sol:["Фото тарелки отправляется в мультимодальную модель","ИИ определяет блюдо, примерный вес и КБЖУ","Поля заполняются автоматически, пользователь только подтверждает","Приложения для iOS и Android"],
-    res:"Запись приёма пищи занимает пару секунд вместо минуты ручного ввода.",
-    stack:["Vision LLM","SwiftUI","Kotlin"]},
+    res:"Запись приёма пищи занимает пару секунд вместо минуты ручного ввода. Приложение опубликовано в App Store.",
+    stack:["Vision LLM","SwiftUI","Kotlin"],
+    links:[["App Store","https://apps.apple.com/app/id6788333443"],["Сайт приложения","https://plan1ro.ru"]]},
   funnel:{k:"Продажи · Telegram-бот",t:"Воронка продаж онлайн-курса в Telegram",
     task:"Автор курса вручную отвечал на вопросы, выставлял счета и добавлял оплативших в закрытый канал.",
     sol:["Пошаговая воронка: знакомство, программа, для кого курс, цена","Оплата через ЮKassa прямо в боте","Проверка платежа и одноразовая ссылка в закрытый канал","Админ-панель: тексты и картинки воронки меняются без программиста"],
     res:"Продажа работает круглосуточно без участия автора: от первого сообщения до доступа к урокам.",
-    stack:["Python","aiogram","ЮKassa","SQLite"]},
+    stack:["Python","aiogram","ЮKassa","SQLite"],
+    links:[["Открыть бота","https://t.me/spidrampkurs_bot"]]},
   video:{k:"ИИ-контент · видео",t:"Анимационный ролик для госпрезентации",
     task:"Для презентации продукта государственным заказчикам нужен был мультфильм о жизни в умном доме. Бюджета и сроков на студию анимации не было.",
     sol:["Сценарий и раскадровка на 17 сцен","Единый персонаж во всех кадрах через character sheet","Генерация кадров и анимация нейросетями","Закадровый голос и финальный монтаж"],
     res:"Готовый ролик на 1:18 за несколько дней, в разы дешевле классического продакшна.",
-    stack:["Nano Banana","Kling","ИИ-озвучка"]}
+    stack:["Nano Banana","Kling","ИИ-озвучка"],
+    videos:[{src:"media/domiro-promo.mp4",poster:"img/domiro-video-cover.webp"}]},
+  privod:{k:"Редизайн · B2B-каталог",t:"ПромПривод — каталог промышленной автоматики",
+    task:"Поставщик приводной техники VEDA продавал через устаревший сайт на Bitrix: каталог на две тысячи позиций было тяжело просматривать, а подобрать оборудование по параметрам — почти невозможно.",
+    sol:["Новая дизайн-система для всего сайта: главная, каталог, категории, карточки товаров","Каталог-меню с вложенными панелями по всем разделам","Корзина, оформление заказа, избранное и сравнение характеристик","Страницы услуг, акций, компании, контактов и помощи","Мобильная версия шапки и каталога"],
+    res:"Сорок страниц в едином стиле вместо разнородных шаблонов Bitrix. Клиент видит наличие и количество позиций в разделе и отправляет спецификацию в один клик.",
+    stack:["HTML","CSS","JavaScript","Bitrix","Python"],
+    links:[["Открыть сайт","https://p-privod.ru/"]]},
+  chocolate:{k:"Telegram-бот · платежи",t:"Chocolate Stars — магазин Telegram Stars",
+    task:"Продавать Telegram Stars и Premium вручную нельзя: клиент платит в любое время суток и ждёт зачисления сразу, а курс криптовалюты меняется каждый час.",
+    sol:["Полный цикл без человека: оплата, проверка, покупка на Fragment, выдача клиенту","Несколько касс: карты, СБП и криптовалюта, с разной логикой комиссий","Курсы тянутся с рынка раз в час, чтобы не торговать себе в убыток","Реферальная система с личным процентом для каждого партнёра","Мини-приложения внутри Telegram: отзывы и аренда NFT"],
+    res:"Заказ проходит полностью сам, в любое время суток. База клиентов перенесена с чужой франшизы без потери диалогов.",
+    stack:["Python","aiogram","FastAPI","SQLite","Fragment API"],
+    links:[["Открыть бота","https://t.me/ChocolateStarsBot"]]},
+  stankin:{k:"Мобильное приложение · iOS",t:"Расписание для студентов вуза",
+    task:"Расписание вуза лежит на сайте в неудобных таблицах: чтобы узнать, какая пара и в какой аудитории, студент каждый раз ищет свою группу заново.",
+    sol:["Приложение подтягивает расписание группы и показывает день и неделю","Видно, какая пара идёт сейчас и что дальше","Аудитории, преподаватели и типы занятий в одной карточке","Свой сервер, который забирает и раскладывает расписание"],
+    res:"Приложение опубликовано в App Store и уже получило обновление 1.1.",
+    stack:["SwiftUI","Node.js","App Store"],
+    links:[["App Store","https://apps.apple.com/app/id6816728066"],["Сайт приложения","https://stankinapp.ru/about.html"]]}
 };
 const dlg=document.getElementById("dlg"),body=document.getElementById("dlgbody");
 document.querySelectorAll(".case").forEach(el=>el.addEventListener("click",()=>{
   const c=CASES[el.dataset.case];
-  body.innerHTML=`<div class="k">${c.k}</div><h3>${c.t}</h3><h4>Задача</h4><p>${c.task}</p><h4>Что сделали</h4><ul>${c.sol.map(s=>`<li>${s}</li>`).join("")}</ul><h4>Результат</h4><p>${c.res}</p><div class="stack">${c.stack.map(s=>`<span>${s}</span>`).join("")}</div>`;
+  body.innerHTML=`<div class="k">${c.k}</div><h3>${c.t}</h3>${c.links?`<div class="links">${c.links.map(([t,u])=>`<a class="btn" href="${u}" target="_blank" rel="noopener">${t}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a>`).join("")}</div>`:""}${(c.videos||[]).map(v=>`<video class="dlg-video" controls preload="none" playsinline ${v.poster?`poster="${v.poster}"`:""} src="${v.src}"></video>${v.cap?`<p class="dlg-cap">${v.cap}</p>`:""}`).join("")}<h4>Задача</h4><p>${c.task}</p><h4>Что сделали</h4><ul>${c.sol.map(s=>`<li>${s}</li>`).join("")}</ul><h4>Результат</h4><p>${c.res}</p><div class="stack">${c.stack.map(s=>`<span>${s}</span>`).join("")}</div>`;
   dlg.showModal();
 }));
 document.getElementById("dlgx").onclick=()=>dlg.close();
+dlg.addEventListener("close",()=>dlg.querySelectorAll("video").forEach(v=>v.pause()));
 dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close()});
 
 document.getElementById("filters")?.addEventListener("click",e=>{
