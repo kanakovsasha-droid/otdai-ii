@@ -208,6 +208,8 @@ a.sol{color:inherit}
 .shot img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
 .scr-shot{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
 .dlg-video{display:block;width:100%;margin:26px 0 8px;border-radius:20px;background:#0b0b12;box-shadow:0 18px 40px rgba(30,40,110,.18)}
+.dlg-video.vert{width:auto;max-width:100%;height:min(62vh,560px);aspect-ratio:9/16;margin-left:auto;margin-right:auto}
+.dlg-video.vert+.dlg-cap{text-align:center}
 .dlg-cap{font-size:14px;color:var(--muted);margin:0 0 6px}
 .sched{padding:10px;display:grid;gap:7px}
 .les{display:grid;grid-template-columns:34px 1fr;gap:6px;align-items:start;background:#fff;border-radius:11px;padding:8px;box-shadow:0 1px 2px rgba(0,0,0,.05)}
@@ -832,6 +834,7 @@ const CASES={
     sol:["Фото тарелки отправляется в мультимодальную модель","ИИ определяет блюдо, примерный вес и КБЖУ","Поля заполняются автоматически, пользователь только подтверждает","Приложения для iOS и Android"],
     res:"Запись приёма пищи занимает пару секунд вместо минуты ручного ввода. Приложение опубликовано в App Store.",
     stack:["Vision LLM","SwiftUI","Kotlin"],
+    videos:[{src:"media/planiro-promo.mp4",poster:"img/planiro-promo-cover.jpg",cap:"Промо приложения Planiro · 0:22",vertical:true}],
     links:[["App Store","https://apps.apple.com/app/id6788333443"],["Сайт приложения","https://plan1ro.ru"]]},
   funnel:{k:"Продажи · Telegram-бот",t:"Воронка продаж онлайн-курса в Telegram",
     task:"Автор курса вручную отвечал на вопросы, выставлял счета и добавлял оплативших в закрытый канал.",
@@ -867,7 +870,7 @@ const CASES={
 const dlg=document.getElementById("dlg"),body=document.getElementById("dlgbody");
 document.querySelectorAll(".case").forEach(el=>el.addEventListener("click",()=>{
   const c=CASES[el.dataset.case];
-  body.innerHTML=`<div class="k">${c.k}</div><h3>${c.t}</h3>${c.links?`<div class="links">${c.links.map(([t,u])=>`<a class="btn" href="${u}" target="_blank" rel="noopener">${t}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a>`).join("")}</div>`:""}${(c.videos||[]).map(v=>`<video class="dlg-video" controls preload="none" playsinline ${v.poster?`poster="${v.poster}"`:""} src="${v.src}"></video>${v.cap?`<p class="dlg-cap">${v.cap}</p>`:""}`).join("")}<h4>Задача</h4><p>${c.task}</p><h4>Что сделали</h4><ul>${c.sol.map(s=>`<li>${s}</li>`).join("")}</ul><h4>Результат</h4><p>${c.res}</p><div class="stack">${c.stack.map(s=>`<span>${s}</span>`).join("")}</div>`;
+  body.innerHTML=`<div class="k">${c.k}</div><h3>${c.t}</h3>${c.links?`<div class="links">${c.links.map(([t,u])=>`<a class="btn" href="${u}" target="_blank" rel="noopener">${t}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a>`).join("")}</div>`:""}${(c.videos||[]).map(v=>`<video class="dlg-video${v.vertical?" vert":""}" controls preload="none" playsinline ${v.poster?`poster="${v.poster}"`:""} src="${v.src}"></video>${v.cap?`<p class="dlg-cap">${v.cap}</p>`:""}`).join("")}<h4>Задача</h4><p>${c.task}</p><h4>Что сделали</h4><ul>${c.sol.map(s=>`<li>${s}</li>`).join("")}</ul><h4>Результат</h4><p>${c.res}</p><div class="stack">${c.stack.map(s=>`<span>${s}</span>`).join("")}</div>`;
   dlg.showModal();
 }));
 document.getElementById("dlgx").onclick=()=>dlg.close();
